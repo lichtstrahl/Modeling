@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/viewK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_centerVertical="true"
+        android:text="@string/varK"/>
+
+    <EditText
+        android:id="@+id/inputK"
+        android:layout_width="@dimen/widthInput"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:inputType="number"
+        android:textSize="@dimen/smallText"
+        android:layout_toEndOf="@id/viewK"
+        android:text="@string/defaultK"/>
+
+    <TextView
+        android:id="@+id/viewLambda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_toEndOf="@id/inputK"
+        android:layout_centerVertical="true"
+        android:text="@string/varLambda" />
+
+    <EditText
+        android:id="@+id/inputLambda"
+        android:layout_width="@dimen/widthInput"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:inputType="numberDecimal"
+        android:layout_toEndOf="@id/viewLambda"
+        android:textSize="@dimen/smallText"
+        android:text="@string/defaultLambda"/>
+    </RelativeLayout>

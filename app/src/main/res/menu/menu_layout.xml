@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuItemUniform"
+        android:title="@string/uniformDistribution"/>
+    <item
+        android:id="@+id/menuItemPuasson"
+        android:title="@string/puassonDistribution"/>
+    <item
+        android:id="@+id/menuItemNormal"
+        android:title="@string/normalDistribution"/>
+    <item
+        android:id="@+id/menuItemErlang"
+        android:title="@string/erlangDistribution"/>
+
+</menu>

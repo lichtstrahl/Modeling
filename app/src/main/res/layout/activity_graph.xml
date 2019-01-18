@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.GraphActivity">
+    <FrameLayout
+        android:id="@+id/headLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+    </FrameLayout>
+
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heightGraph"
+        android:layout_below="@id/headLayout"/>
+
+    <Button
+        android:id="@+id/buttonUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/graph"
+        style="@style/ButtonStyle" />
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonUpdate"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:id="@+id/viewX0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:layout_centerVertical="true"
+            android:text="@string/varX0"/>
+
+        <EditText
+            android:id="@+id/inputX0"
+            android:layout_width="@dimen/widthInput"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:inputType="numberDecimal|numberSigned"
+            android:textSize="@dimen/smallText"
+            android:layout_toEndOf="@id/viewX0"
+            android:text="@string/defaultX0"/>
+
+        <TextView
+            android:id="@+id/viewXk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:layout_toEndOf="@id/inputX0"
+            android:layout_centerVertical="true"
+            android:text="@string/varXn" />
+
+        <EditText
+            android:id="@+id/inputXk"
+            android:layout_width="@dimen/widthInput"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_toEndOf="@id/viewXk"
+            android:textSize="@dimen/smallText"
+            android:text="@string/defaultXk"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bottomLayout"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/textColorF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/stdMargin"
+            android:textSize="@dimen/smallText"
+            android:text="@string/functionF"
+            />
+
+        <TextView
+            android:id="@+id/textColorf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/textColorF"
+            android:textSize="@dimen/smallText"
+            android:text="@string/functionf"
+            />
+        <View
+            android:id="@+id/viewColorF"
+            android:layout_width="@dimen/viewSize"
+            android:layout_height="5dp"
+            android:background="@color/colorF"
+            android:layout_below="@id/textColorF"
+            android:layout_alignStart="@id/textColorF"
+            android:layout_alignEnd="@id/textColorF"/>
+
+        <View
+            android:id="@+id/viewColorf"
+            android:layout_width="@dimen/viewSize"
+            android:layout_height="5dp"
+            android:background="@color/colorf"
+            android:layout_below="@id/textColorf"
+            android:layout_alignStart="@id/textColorf"
+            android:layout_alignEnd="@id/textColorf"
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

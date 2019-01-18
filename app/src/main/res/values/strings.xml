@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Моделирование</string>
+    <string name="update">Обновить</string>
+    <string name="defaultValue">0</string>
+
+
+    <string name="varX0">X0</string>
+    <string name="varXn">Xn</string>
+    <string name="defaultX0">-5</string>
+    <string name="defaultXk">5</string>
+
+    <string name="functionF">Функция распределения</string>
+    <string name="functionf">Функция плотности</string>
+
+    <!-- Uniform Fragment -->
+    <string name="varA">a</string>
+    <string name="varB">b</string>
+    <string name="defaultA">1</string>
+    <string name="defaultB">2</string>
+
+    <!-- Puasson Fragment -->
+    <string name="varLambda">lambda</string>
+    <string name="defaultLambda">2</string>
+    <!-- Normal Fragment -->
+    <string name="varMu">Mu</string>
+    <string name="varSigma">Sigma</string>
+    <string name="defaultMu">0</string>
+    <string name="defaultSigma">1</string>
+    <!-- Erlang Fragment -->
+    <string name="varK">K</string>
+    <string name="defaultK">2</string>
+
+    <!-- Options Menu -->
+    <string name="uniformDistribution">Равномерное</string>
+    <string name="puassonDistribution">Пуссона</string>
+    <string name="normalDistribution">Нормальное</string>
+    <string name="erlangDistribution">Эрланга</string>
+    <string name="graphViewTitle">Фунции плотности и распределения</string>
+
+    <!-- Start Activity -->
+    <string name="lab1">Лабораторная 1</string>
+    <string name="lab2">Лабораторная 2</string>
+    <string name="label_low">0 ... 9</string>
+    <string name="label_middle">10 ... 99</string>
+    <string name="label_high">100 ... 999</string>
+    <string name="QRNS_ANU">Данные из Австралийского Национального Университета</string>
+    <string name="buttonEvaluation">Оценка</string>
+    <string name="labelInput">Ввод оператора</string>
+
+
+</resources>
