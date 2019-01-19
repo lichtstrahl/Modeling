@@ -49,6 +49,7 @@
     <string name="lectionGenerator">Генератор ИУ7 (с лекции)</string>
     <string name="needTenNumber">Должно быть ровно 10 чисел</string>
     <string name="notNumber">Некорректные ланные</string>
+    <string name="lab4">Лабораторная 4</string>
 
 
 </resources>
