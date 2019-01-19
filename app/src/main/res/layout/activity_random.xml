@@ -13,19 +13,10 @@
 
         <ImageView
             android:id="@+id/imageANU"
-            android:layout_width="@dimen/anuSize"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/anuSize"
             android:src="@drawable/ic_anu"/>
 
-        <TextView
-            android:id="@+id/label_QRNS_ANU"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageANU"
-            android:layout_alignParentTop="true"
-            android:text="@string/QRNS_ANU"
-            android:textAlignment="center"
-            android:textSize="@dimen/bigText" />
 
         <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
@@ -56,7 +47,7 @@
             android:layout_height="@dimen/list_height"
             android:layout_margin="@dimen/stdMargin"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/label_QRNS_ANU"
+            android:layout_below="@id/imageANU"
             android:background="@color/recyclerBG"
             tools:listitem="@layout/list_item_integer"
             />
@@ -114,6 +105,15 @@
             android:text="@string/buttonEvaluation"
             style="@style/ButtonStyle"/>
 
+        <TextView
+            android:id="@+id/label_iu7generator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonEvaluation"
+            android:textSize="@dimen/bigText"
+            android:text="@string/lectionGenerator"
+            android:textAlignment="center"/>
+
         <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/list_lowGenerator"
@@ -141,7 +141,7 @@
             android:id="@+id/list_middleGenerator"
             android:layout_width="@dimen/list_width"
             android:layout_height="@dimen/list_height"
-            android:layout_below="@id/buttonEvaluation"
+            android:layout_below="@id/label_iu7generator"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/stdMargin"
             android:layout_marginTop="0dp"
@@ -158,7 +158,7 @@
             android:layout_alignEnd="@id/list_middleGenerator"
             android:layout_marginTop="@dimen/halfMargin"
             android:text="@string/label_middle"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
@@ -183,11 +183,20 @@
             android:textAlignment="center"/>
 
 
+        <Button
+            android:id="@+id/buttonEvaluationGenerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_middleGenerator"
+            android:layout_centerHorizontal="true"
+            android:text="@string/buttonEvaluation"
+            style="@style/ButtonStyle"/>
+
         <TextView
             android:id="@+id/labelInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/label_middleGenerator"
+            android:layout_below="@id/buttonEvaluationGenerator"
             android:layout_centerHorizontal="true"
             android:text="@string/labelInput"/>
 

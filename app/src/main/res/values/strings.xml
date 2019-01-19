@@ -46,6 +46,7 @@
     <string name="QRNS_ANU">Данные из Австралийского Национального Университета</string>
     <string name="buttonEvaluation">Оценка</string>
     <string name="labelInput">Ввод оператора</string>
+    <string name="lectionGenerator">Генератор ИУ7 (с лекции)</string>
 
 
 </resources>
