@@ -19,6 +19,12 @@ public class StartActivity extends AppCompatActivity {
         RandomActivity.start(this);
     }
 
+    @OnClick(R.id.buttonLab4)
+    public void clickStartLab4() {
+        QueueActivity.start(this);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
