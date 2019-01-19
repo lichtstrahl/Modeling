@@ -37,7 +37,7 @@ import iv.root.modeling.util.ListenerEditText;
 import iv.root.modeling.util.RandomGenerator;
 
 public class RandomActivity extends AppCompatActivity {
-    private static final int COUNT_VALUE = 100;    // Количество запрашиваемых чисел
+    private static final int COUNT_VALUE = 1000;    // Количество запрашиваемых чисел
 
     @BindView(R.id.progressLoading)
     ProgressBar progressLoading;

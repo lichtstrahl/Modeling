@@ -36,6 +36,9 @@ public class Evaluation {
             1.8125
 
     };
+
+    private static final double STUDENT_10_0975 = 2.228;
+    private static final double STUDENT_1000_0975 = 2.3301;
     // 15,987	13,442	11,781	10,473	9,3418	8,2955	7,2672	6,1791	4,8652
 
     private Evaluation() { }
@@ -46,26 +49,34 @@ public class Evaluation {
      */
     public static double evaluation(List<Integer> values) {
         int n = values.size(); // Число степеней свободы (для Квантилей Стьюдента)
+        if (n != 10 && n != 1000) throw new IllegalArgumentException("Некорректная длина массива: " + n);
         List<Integer> u = calcuteU(values);
         List<Integer> l = calcuteL(values);
 
         int s = calcuteS(u, l);         // Обнаружение тенденций в дисперсии
         int d = calcuteD(u, l);         // Обнаружение тенденции в средней
 
-        double k = Math.sqrt(2*Math.log(n) - 3.4253);
-        double f = Math.sqrt(2*Math.log(n) - 0.8456);
+        double f = (n > 50)
+                ? Math.sqrt(2*Math.log(n) - 0.8456) // Для 1000
+                : 1.288;                            // Для 10
+        double k = (n > 50)
+                ? Math.sqrt(2*Math.log(n) - 3.4253) // Для 1000
+                : 1.964;                            // Для 10
 
-        double t = d/f;
-        double t_ = (s - f*f) / (k);
+        double t = Math.abs(d/f);
+        double t_ = Math.abs((s - f*f) / (k));
 
-        double prz = 0.0;   // Процент, с которым можно утверждать
+        // Берём alpha = 0.95 (доверительная вероятность)
+        // Значит квантиль Стьюдента будет 1+0.95/2 = 0.975
+        // С числом степеней свободы: n
+        // Квантиль со степенями свободы либо 10 либо 1000
+        double T = (n == 10) ? STUDENT_10_0975 : STUDENT_1000_0975;
 
-        double []T = n == 1000 ? T_1000 : T_10;
-
-        for (int i = 0; i < T.length; i++)
-            if (Math.abs(t) > T[i] && Math.abs(t_) > T[i])
-                prz = i * 0.1;
-        return prz;
+        if (t > T) {  // Тренд найден хотя бы в одной из виличин
+            return 1.0;
+        } else {                // В обеих величинах отсутствует тренд
+            return t/T;
+        }
     }
 
     /** Проверка на равномерное распределение для последовательности Xi=[0..9]
@@ -140,6 +151,11 @@ public class Evaluation {
         }
     }
 
+    /**
+     * 1 если больше всех предыдущих, 0 иначе
+     * @param array
+     * @return
+     */
     private static List<Integer> calcuteU(List<Integer> array) {
         int curMax = array.get(0);
         List<Integer> result = new LinkedList<>();
@@ -157,6 +173,11 @@ public class Evaluation {
         return result;
     }
 
+    /**
+     * 1 если меньше всех предыдущих, 0 иначе
+     * @param array
+     * @return
+     */
     private static List<Integer> calcuteL(List<Integer> array) {
         int curMin = array.get(0);
         List<Integer> result = new LinkedList<>();
@@ -176,19 +197,19 @@ public class Evaluation {
 
     private static int calcuteS(List<Integer> u, List<Integer> l) {
         int n = u.size();
-        int result = 0;
+        int sum = 0;
         for (int i = 1; i < n; i++) {
-            result += (u.get(i) + l.get(i));
+            sum += (u.get(i) + l.get(i));
         }
-        return result;
+        return sum;
     }
 
     private static int calcuteD(List<Integer> u, List<Integer> l) {
         int n = u.size();
-        int result = 0;
-        for (int i = 0; i < n; i++) {
-            result += (u.get(i) - l.get(i));
+        int sum = 0;
+        for (int i = 1; i < n; i++) {
+            sum += (u.get(i) - l.get(i));
         }
-        return result;
+        return sum;
     }
 }
