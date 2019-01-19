@@ -47,6 +47,8 @@
     <string name="buttonEvaluation">Оценка</string>
     <string name="labelInput">Ввод оператора</string>
     <string name="lectionGenerator">Генератор ИУ7 (с лекции)</string>
+    <string name="needTenNumber">Должно быть ровно 10 чисел</string>
+    <string name="notNumber">Некорректные ланные</string>
 
 
 </resources>

@@ -119,17 +119,16 @@ public class RandomActivity extends AppCompatActivity {
             labelInput.setText("");
             String[] values = str.split(" ");
             if (values.length != 10)
-                labelInput.setText("Должно быть 10 чисел");
+                labelInput.setText(R.string.needTenNumber);
             else {
                 try {
                     List<Integer> list = new LinkedList<>();
                     for (String v : values) {
                         list.add(Integer.valueOf(v));
                     }
-                    double p = Evaluation.evaluation(list);
-                    Toast.makeText(this, "" + p, Toast.LENGTH_SHORT).show();
+                    labelInput.setText(String.format(Locale.ENGLISH, "%8.3f", Evaluation.evaluation(list)));
                 } catch (NumberFormatException e) {
-                    labelInput.setText("NULL");
+                    labelInput.setText(R.string.notNumber);
                 }
             }
         });
