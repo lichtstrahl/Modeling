@@ -13,8 +13,10 @@
 
         <ImageView
             android:id="@+id/imageANU"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/anuSize"
+            android:layout_width="@dimen/anuWidth"
+            android:layout_height="@dimen/anuHeight"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_anu"/>
 
 

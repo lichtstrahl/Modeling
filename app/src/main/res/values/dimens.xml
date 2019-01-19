@@ -16,6 +16,7 @@
     <!-- Random Activity -->
     <dimen name="list_width">70dp</dimen>
     <dimen name="list_height">230dp</dimen>
-    <dimen name="anuSize">70dp</dimen>
+    <dimen name="anuHeight">70dp</dimen>
+    <dimen name="anuWidth">180dp</dimen>
     <dimen name="progressBarSize">50dp</dimen>
 </resources>
