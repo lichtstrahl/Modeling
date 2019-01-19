@@ -32,6 +32,7 @@ import iv.root.modeling.network.dto.ResponseQRNS;
 import iv.root.modeling.util.Evaluation;
 import iv.root.modeling.util.IntegerAdapter;
 import iv.root.modeling.util.ListenerEditText;
+import iv.root.modeling.util.RandomGenerator;
 
 public class RandomActivity extends AppCompatActivity {
     private static final int COUNT_VALUE = 100;    // Количество запрашиваемых чисел
@@ -47,15 +48,21 @@ public class RandomActivity extends AppCompatActivity {
 
     // 0 ... 9
     private RecyclerView listLow;
+    private RecyclerView listLowGenerator;
     private IntegerAdapter adapterLow;
+    private IntegerAdapter adapterLowGenerator;
 
     // 10 ... 99
     private RecyclerView listMiddle;
+    private RecyclerView listMiddleGenerator;
     private IntegerAdapter adapterMiddle;
+    private IntegerAdapter adapterMiddleGenerator;
 
     // 100 ... 999
     private RecyclerView listHigh;
+    private RecyclerView listHighGenerator;
     private IntegerAdapter adapterHigh;
+    private IntegerAdapter adapterHighGenerator;
 
     private ListsResponseObserver listsObserver;
 
@@ -92,8 +99,17 @@ public class RandomActivity extends AppCompatActivity {
         listLow.setAdapter(adapterLow);
         listLow.setLayoutManager(new LinearLayoutManager(this));
 
-        for (Integer value : list)
+        adapterLowGenerator = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
+        listLowGenerator = findViewById(R.id.list_lowGenerator);
+        listLowGenerator.setAdapter(adapterLowGenerator);
+        listLowGenerator.setLayoutManager(new LinearLayoutManager(this));
+
+        RandomGenerator.rand(0);
+        for (Integer value : list) {
             adapterLow.append(value % 10);
+            double r = Math.abs(RandomGenerator.rand(2)*1000);
+            adapterLowGenerator.append((int)Math.round(r)%10);
+        }
     }
 
     private void bindMiddle(List<Integer> list) {
@@ -102,9 +118,18 @@ public class RandomActivity extends AppCompatActivity {
         listMiddle.setAdapter(adapterMiddle);
         listMiddle.setLayoutManager(new LinearLayoutManager(this));
 
-        for (Integer value : list)
-            adapterMiddle.append(10 + value%90);
 
+        adapterMiddleGenerator = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
+        listMiddleGenerator = findViewById(R.id.list_middleGenerator);
+        listMiddleGenerator.setAdapter(adapterMiddleGenerator);
+        listMiddleGenerator.setLayoutManager(new LinearLayoutManager(this));
+
+        RandomGenerator.rand(0);
+        for (Integer value : list) {
+            adapterMiddle.append(10 + value % 90);
+            double r = Math.abs(RandomGenerator.rand(2)*1000);
+            adapterMiddleGenerator.append((int)(10 + Math.round(r) % 90));
+        }
     }
 
     private void bindHigh(List<Integer> list) {
@@ -113,8 +138,17 @@ public class RandomActivity extends AppCompatActivity {
         listHigh.setAdapter(adapterHigh);
         listHigh.setLayoutManager(new LinearLayoutManager(this));
 
-        for (Integer value : list)
-            adapterHigh.append(100 + value%900);
+        adapterHighGenerator = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
+        listHighGenerator = findViewById(R.id.list_highGenerator);
+        listHighGenerator.setAdapter(adapterHighGenerator);
+        listHighGenerator.setLayoutManager(new LinearLayoutManager(this));
+
+        RandomGenerator.rand(0);
+        for (Integer value : list) {
+            adapterHigh.append(100 + value % 900);
+            double r = Math.abs(RandomGenerator.rand(2)*1000);
+            adapterHighGenerator.append((int)(100 + Math.round(r) % 900));
+        }
     }
 
     private void initAustralianRandom() {

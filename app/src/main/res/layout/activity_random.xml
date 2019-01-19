@@ -78,7 +78,9 @@
             android:layout_height="@dimen/progressBarSize"
             android:layout_below="@id/label_middle"
             android:layout_alignEnd="@id/label_middle"
-            android:layout_alignStart="@id/label_middle"/>
+            android:layout_alignStart="@id/label_middle"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
         <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
@@ -112,11 +114,80 @@
             android:text="@string/buttonEvaluation"
             style="@style/ButtonStyle"/>
 
+        <android.support.v7.widget.RecyclerView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/list_lowGenerator"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="@dimen/list_height"
+            android:layout_marginEnd="@dimen/stdMargin"
+            android:layout_toStartOf="@id/list_middleGenerator"
+            android:layout_alignTop="@id/list_middleGenerator"
+            android:background="@color/recyclerBG"
+            tools:listitem="@layout/list_item_integer"/>
+
+        <TextView
+            android:id="@+id/label_lowGenerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_lowGenerator"
+            android:layout_alignStart="@id/list_lowGenerator"
+            android:layout_alignEnd="@id/list_lowGenerator"
+            android:layout_marginTop="@dimen/halfMargin"
+            android:text="@string/label_low"
+            android:textAlignment="center"/>
+
+
+        <android.support.v7.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/list_middleGenerator"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="@dimen/list_height"
+            android:layout_below="@id/buttonEvaluation"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/stdMargin"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/stdMargin"
+            android:background="@color/recyclerBG"
+            tools:listitem="@layout/list_item_integer" />
+
+        <TextView
+            android:id="@+id/label_middleGenerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_middleGenerator"
+            android:layout_alignStart="@id/list_middleGenerator"
+            android:layout_alignEnd="@id/list_middleGenerator"
+            android:layout_marginTop="@dimen/halfMargin"
+            android:text="@string/label_middle"
+            android:textAlignment="center"/>
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/list_highGenerator"
+            android:layout_width="@dimen/list_width"
+            android:layout_height="@dimen/list_height"
+            android:layout_marginStart="@dimen/stdMargin"
+            android:layout_toEndOf="@id/list_middleGenerator"
+            android:layout_alignTop="@id/list_middleGenerator"
+            android:background="@color/recyclerBG"
+            tools:listitem="@layout/list_item_integer"/>
+
+        <TextView
+            android:id="@+id/label_highGenerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/list_highGenerator"
+            android:layout_alignStart="@id/list_highGenerator"
+            android:layout_alignEnd="@id/list_highGenerator"
+            android:layout_marginTop="@dimen/halfMargin"
+            android:text="@string/label_high"
+            android:textAlignment="center"/>
+
+
         <TextView
             android:id="@+id/labelInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonEvaluation"
+            android:layout_below="@id/label_middleGenerator"
             android:layout_centerHorizontal="true"
             android:text="@string/labelInput"/>
 
