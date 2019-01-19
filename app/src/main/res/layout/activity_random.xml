@@ -49,14 +49,6 @@
             android:text="@string/label_low"
             android:textAlignment="center"/>
 
-        <ProgressBar
-            android:id="@+id/progressBarLow"
-            android:layout_width="@dimen/progressBarSize"
-            android:layout_height="@dimen/progressBarSize"
-            android:layout_below="@id/label_low"
-            android:layout_alignEnd="@id/label_low"
-            android:layout_alignStart="@id/label_low"/>
-
         <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/list_middle"
@@ -81,7 +73,7 @@
             android:textAlignment="center"/>
 
         <ProgressBar
-            android:id="@+id/progressBarMiddle"
+            android:id="@+id/progressLoading"
             android:layout_width="@dimen/progressBarSize"
             android:layout_height="@dimen/progressBarSize"
             android:layout_below="@id/label_middle"
@@ -111,19 +103,11 @@
             android:text="@string/label_high"
             android:textAlignment="center"/>
 
-        <ProgressBar
-            android:id="@+id/progressBarHigh"
-            android:layout_width="@dimen/progressBarSize"
-            android:layout_height="@dimen/progressBarSize"
-            android:layout_below="@id/label_high"
-            android:layout_alignEnd="@id/label_high"
-            android:layout_alignStart="@id/label_high"/>
-
         <Button
             android:id="@+id/buttonEvaluation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/progressBarMiddle"
+            android:layout_below="@id/progressLoading"
             android:layout_centerHorizontal="true"
             android:text="@string/buttonEvaluation"
             style="@style/ButtonStyle"/>

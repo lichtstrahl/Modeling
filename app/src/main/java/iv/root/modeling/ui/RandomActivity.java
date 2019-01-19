@@ -20,11 +20,14 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import iv.root.modeling.R;
 import iv.root.modeling.app.App;
-import iv.root.modeling.network.IntegerResponseObserver;
+import iv.root.modeling.network.ListsResponseObserver;
+import iv.root.modeling.network.dto.ContainerForList;
 import iv.root.modeling.network.dto.ResponseQRNS;
 import iv.root.modeling.util.Evaluation;
 import iv.root.modeling.util.IntegerAdapter;
@@ -33,12 +36,8 @@ import iv.root.modeling.util.ListenerEditText;
 public class RandomActivity extends AppCompatActivity {
     private static final int COUNT_VALUE = 100;    // Количество запрашиваемых чисел
 
-    @BindView(R.id.progressBarLow)
-    ProgressBar barLow;
-    @BindView(R.id.progressBarMiddle)
-    ProgressBar barMiddle;
-    @BindView(R.id.progressBarHigh)
-    ProgressBar barHigh;
+    @BindView(R.id.progressLoading)
+    ProgressBar progressLoading;
     @BindView(R.id.input)
     EditText input;
     @BindView(R.id.labelInput)
@@ -49,17 +48,16 @@ public class RandomActivity extends AppCompatActivity {
     // 0 ... 9
     private RecyclerView listLow;
     private IntegerAdapter adapterLow;
-    private IntegerResponseObserver<ResponseQRNS> observerLow;
 
     // 10 ... 99
     private RecyclerView listMiddle;
     private IntegerAdapter adapterMiddle;
-    private IntegerResponseObserver<ResponseQRNS> observerMiddle;
 
     // 100 ... 999
     private RecyclerView listHigh;
     private IntegerAdapter adapterHigh;
-    private IntegerResponseObserver<ResponseQRNS> observerHigh;
+
+    private ListsResponseObserver listsObserver;
 
     @OnClick(R.id.buttonEvaluation)
     public void clickEvaluation() {
@@ -77,76 +75,63 @@ public class RandomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_random);
         ButterKnife.bind(this);
 
-        initLow();
-        initMiddle();
-        initHigh();
-
         listenerInput = new ListenerEditText(input);
+        listsObserver = new ListsResponseObserver(this::bindRandomLists, this::error);
     }
 
-    private void initLow() {
+    private void bindRandomLists(ContainerForList container) {
+        bindLow(container.listLow);
+        bindMiddle(container.listMiddle);
+        bindHigh(container.listHigh);
+        progressLoading.setVisibility(View.GONE);
+    }
+
+    private void bindLow(List<Integer> list) {
         adapterLow = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
         listLow = findViewById(R.id.list_low);
         listLow.setAdapter(adapterLow);
         listLow.setLayoutManager(new LinearLayoutManager(this));
 
-        observerLow = new IntegerResponseObserver<>(response -> {
-                    List<Integer> values = response.getData();
-                    for (Integer v : values) {
-                        adapterLow.append(v % 10);
-                    }
-                    barLow.setVisibility(View.GONE);
-                },
-                this::error
-        );
-
-        App.requestRandomInteger(COUNT_VALUE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observerLow);
+        for (Integer value : list)
+            adapterLow.append(value % 10);
     }
 
-    private void initMiddle() {
+    private void bindMiddle(List<Integer> list) {
         adapterMiddle = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
         listMiddle = findViewById(R.id.list_middle);
         listMiddle.setAdapter(adapterMiddle);
         listMiddle.setLayoutManager(new LinearLayoutManager(this));
 
-        observerMiddle = new IntegerResponseObserver<>(response -> {
-                    List<Integer> values = response.getData();
-                    for (Integer v : values)
-                        adapterMiddle.append(10 + v % 90);
-                    barMiddle.setVisibility(View.GONE);
-                },
-                this::error
-        );
+        for (Integer value : list)
+            adapterMiddle.append(10 + value%90);
 
-        App.requestRandomInteger(COUNT_VALUE)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observerMiddle);
     }
 
-    private void initHigh() {
+    private void bindHigh(List<Integer> list) {
         adapterHigh = new IntegerAdapter(new LinkedList<>(), LayoutInflater.from(this));
-
         listHigh = findViewById(R.id.list_high);
         listHigh.setAdapter(adapterHigh);
         listHigh.setLayoutManager(new LinearLayoutManager(this));
 
-        observerHigh = new IntegerResponseObserver<>(respone -> {
-                    List<Integer> values = respone.getData();
-                    for (Integer v : values)
-                        adapterHigh.append(100 + v % 900);
-                    barHigh.setVisibility(View.GONE);
-                },
-                this::error
-        );
+        for (Integer value : list)
+            adapterHigh.append(100 + value%900);
+    }
 
-        App.requestRandomInteger(COUNT_VALUE)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(observerHigh);
+    private void initAustralianRandom() {
+        progressLoading.setVisibility(View.VISIBLE);
+        Single<ResponseQRNS> resLow = App.requestRandomInteger(COUNT_VALUE);
+        Single<ResponseQRNS> resMiddle = App.requestRandomInteger(COUNT_VALUE);
+        Single<ResponseQRNS> resHigh = App.requestRandomInteger(COUNT_VALUE);
+
+        Observable.zip(resLow.toObservable(), resMiddle.toObservable(), resHigh.toObservable(), this::initLists)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(listsObserver);
+
+    }
+
+    private ContainerForList initLists(ResponseQRNS r1, ResponseQRNS r2, ResponseQRNS r3) {
+        return new ContainerForList(r1.getData(), r2.getData(), r3.getData());
     }
 
     @Override
@@ -170,23 +155,20 @@ public class RandomActivity extends AppCompatActivity {
                 }
             }
         });
+        initAustralianRandom();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        observerLow.dispose();
-        observerMiddle.dispose();
-        observerHigh.dispose();
+        listsObserver.unsubscribe();
         listenerInput.unsubscribe();
     }
 
     public void error(Throwable t) {
         App.logE(t.getMessage());
         Toast.makeText(this, t.getMessage(), Toast.LENGTH_LONG).show();
-        barLow.setVisibility(View.GONE);
-        barMiddle.setVisibility(View.GONE);
-        barHigh.setVisibility(View.GONE);
+        progressLoading.setVisibility(View.GONE);
     }
 
     public static void start(Activity activity) {
