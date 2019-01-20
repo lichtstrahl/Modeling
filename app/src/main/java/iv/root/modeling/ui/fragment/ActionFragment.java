@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -15,6 +16,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import iv.root.modeling.R;
 import iv.root.modeling.app.App;
 import iv.root.modeling.modeling.Generator;
@@ -59,6 +63,27 @@ public class ActionFragment extends BaseFragment {
         return new ActionFragment();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        modelingObserver.unsubscribe();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuItemRunModeling:
+                progressModeling.setVisibility(View.VISIBLE);
+                Single.fromCallable(this::runModeling)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(modelingObserver);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void processingInt(int result) {
         App.logI("Result: " + result);
         progressModeling.setVisibility(View.GONE);
@@ -80,8 +105,8 @@ public class ActionFragment extends BaseFragment {
             getActivity().runOnUiThread(()->Toast.makeText(this.getActivity(), R.string.incorrectData, Toast.LENGTH_LONG).show());
         }
 
-        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize);
-        return machine.modelingAction(count, back);
+        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize, count, back);
+        return machine.modelingAction();
     }
 
     private void stdError(Throwable t) {

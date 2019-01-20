@@ -105,8 +105,8 @@ public class DTFragment extends BaseFragment {
             getActivity().runOnUiThread(()->Toast.makeText(this.getActivity(), R.string.incorrectData, Toast.LENGTH_LONG).show());
         }
 
-        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize);
-        return machine.modelingDT(count, dt, back);
+        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize, count, back);
+        return machine.modelingDT(dt);
     }
 
     private void processingInt(int result) {
