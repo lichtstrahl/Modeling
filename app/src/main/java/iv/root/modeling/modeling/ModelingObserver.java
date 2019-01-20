@@ -1,19 +1,21 @@
 package iv.root.modeling.modeling;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.disposables.Disposable;
 import iv.root.modeling.network.Action;
 import iv.root.modeling.util.Subscribed;
 
-public class ModelingObserver implements SingleObserver<Integer>, Subscribed {
+public class ModelingObserver implements SingleObserver<DataPoint[]>, Subscribed {
     private Disposable disposable;
     @Nullable
-    private Action<Integer> action;
+    private Action<DataPoint[]> action;
     @Nullable
     private Action<Throwable> error;
 
-    public ModelingObserver(Action<Integer> a, Action<Throwable> e) {
+    public ModelingObserver(Action<DataPoint[]> a, Action<Throwable> e) {
         action = a;
         error = e;
     }
@@ -24,8 +26,8 @@ public class ModelingObserver implements SingleObserver<Integer>, Subscribed {
     }
 
     @Override
-    public void onSuccess(Integer integer) {
-        if (action != null) action.run(integer);
+    public void onSuccess(DataPoint[] points) {
+        if (action != null) action.run(points);
     }
 
     @Override

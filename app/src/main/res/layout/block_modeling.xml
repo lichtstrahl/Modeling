@@ -1,154 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutCountRequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/inputCountRequest"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutCountRequest"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/inputCountRequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/requestCount"
+                android:inputType="number"
+                android:text="@string/defaultModelingCount"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/labelInputAB"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/requestCount"
-            android:inputType="number"
-            android:text="@string/defaultModelingCount"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/inputLayoutCountRequest"
+            android:text="@string/labelInputAB"
+            android:textSize="@dimen/middleText"/>
 
-    <TextView
-        android:id="@+id/labelInputAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutCountRequest"
-        android:text="@string/labelInputAB"
-        android:textSize="@dimen/middleText"/>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutA"
+            android:layout_width="@dimen/widthInput"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelInputAB"
+            android:layout_alignStart="@id/labelInputAB">
+            <EditText
+                android:id="@+id/inputA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/varA"
+                android:inputType="number"
+                android:text="@string/defaultModelingA"/>
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutA"
-        android:layout_width="@dimen/widthInput"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelInputAB"
-        android:layout_alignStart="@id/labelInputAB">
-        <EditText
-            android:id="@+id/inputA"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutB"
+            android:layout_width="@dimen/widthInput"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelInputAB"
+            android:layout_alignEnd="@id/labelInputAB">
+            <EditText
+                android:id="@+id/inputB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/varB"
+                android:inputType="number"
+                android:text="@string/defaultModelingB"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/labelInputLambda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/inputLayoutA"
+            android:text="@string/labelInputLambda"
+            android:textSize="@dimen/middleText"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutLambda"
+            android:layout_width="@dimen/widthInputX"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelInputLambda"
+            android:layout_centerHorizontal="true">
+            <EditText
+                android:id="@+id/inputLambda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/varLambda"
+                android:inputType="numberDecimal"
+                android:text="@string/defaultModelingLambda"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/labelInputBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/inputLayoutLambda"
+            android:text="@string/labelInputBack"
+            android:textSize="@dimen/middleText"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutBack"
+            android:layout_width="@dimen/widthInputX"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelInputBack"
+            android:layout_centerHorizontal="true">
+            <EditText
+                android:id="@+id/inputBack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/varLambda"
+                android:inputType="number"
+                android:text="@string/defaultModelingBack"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/labelInputPullSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/inputLayoutBack"
+            android:text="@string/labelInputPullSize"
+            android:textSize="@dimen/middleText"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/inputLayoutPullSize"
+            android:layout_width="@dimen/widthInputX"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelInputPullSize"
+            android:layout_centerHorizontal="true">
+            <EditText
+                android:id="@+id/inputPullSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/stdMargin"
+                android:hint="@string/varLambda"
+                android:inputType="number"
+                android:text="@string/defaultModelingPullSize"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:id="@+id/viewResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/inputLayoutPullSize"
+            android:textSize="@dimen/middleText"/>
+
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graphView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/varA"
-            android:inputType="number"
-            android:text="@string/defaultModelingA"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="@dimen/heightGraph"
+            android:layout_below="@id/viewResult"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutB"
-        android:layout_width="@dimen/widthInput"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelInputAB"
-        android:layout_alignEnd="@id/labelInputAB">
-        <EditText
-            android:id="@+id/inputB"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/varB"
-            android:inputType="number"
-            android:text="@string/defaultModelingB"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/labelInputLambda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutA"
-        android:text="@string/labelInputLambda"
-        android:textSize="@dimen/middleText"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutLambda"
-        android:layout_width="@dimen/widthInputX"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelInputLambda"
-        android:layout_centerHorizontal="true">
-        <EditText
-            android:id="@+id/inputLambda"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/varLambda"
-            android:inputType="numberDecimal"
-            android:text="@string/defaultModelingLambda"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/labelInputBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutLambda"
-        android:text="@string/labelInputBack"
-        android:textSize="@dimen/middleText"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutBack"
-        android:layout_width="@dimen/widthInputX"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelInputBack"
-        android:layout_centerHorizontal="true">
-        <EditText
-            android:id="@+id/inputBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/varLambda"
-            android:inputType="number"
-            android:text="@string/defaultModelingBack"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/labelInputPullSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutBack"
-        android:text="@string/labelInputPullSize"
-        android:textSize="@dimen/middleText"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutPullSize"
-        android:layout_width="@dimen/widthInputX"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/labelInputPullSize"
-        android:layout_centerHorizontal="true">
-        <EditText
-            android:id="@+id/inputPullSize"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/varLambda"
-            android:inputType="number"
-            android:text="@string/defaultModelingPullSize"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <TextView
-        android:id="@+id/viewResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutPullSize"
-        android:textSize="@dimen/middleText"/>
-
-    <ProgressBar
-        android:id="@+id/progressModeling"
-        android:layout_width="@dimen/middleIcon"
-        android:layout_height="@dimen/middleIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        tools:visibility="visible"/>
-
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progressModeling"
+            android:layout_width="@dimen/middleIcon"
+            android:layout_height="@dimen/middleIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/viewResult"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </RelativeLayout>

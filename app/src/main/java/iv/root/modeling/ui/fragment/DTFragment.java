@@ -12,6 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -47,6 +50,10 @@ public class DTFragment extends BaseFragment {
     EditText inputPullSize;
     @BindView(R.id.viewResult)
     TextView viewResult;
+    @BindView(R.id.graphView)
+    GraphView graphView;
+
+
     private ModelingObserver modelingObserver;
     private Machine machine;
 
@@ -56,9 +63,10 @@ public class DTFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_modeling_dt, container, false);
         ButterKnife.bind(this, view);
 
-        modelingObserver = new ModelingObserver(this::processingInt, this::stdError);
+        modelingObserver = new ModelingObserver(this::processingDataPoint, this::stdError);
 
         setHasOptionsMenu(true);
+        graphView.getViewport().setScalableY(true);
         return view;
     }
 
@@ -92,7 +100,7 @@ public class DTFragment extends BaseFragment {
         }
     }
 
-    private int runModeling() {
+    private DataPoint[] runModeling() {
         int count = Integer.valueOf(inputCountRequest.getText().toString());
         int dt = Integer.valueOf(inputDT.getText().toString());
         int a = Integer.valueOf(inputA.getText().toString());
@@ -109,13 +117,13 @@ public class DTFragment extends BaseFragment {
         return machine.modelingDT(dt);
     }
 
-    private void processingInt(int result) {
-        App.logI("Result: " + result);
+    private void processingDataPoint(DataPoint[] points) {
         progressModeling.setVisibility(View.GONE);
 
         viewResult.setText(String.format(Locale.ENGLISH, "Количество утерянных заявок: %d \n" +
                                                                 "Максимальный размер памяти: %d \n"
                 ,machine.getCountLostRequest(), machine.getMaxSize()));
+        App.logI(""+points.length);
     }
 
     private void stdError(Throwable t) {

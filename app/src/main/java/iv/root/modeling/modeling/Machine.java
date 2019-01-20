@@ -1,11 +1,13 @@
 package iv.root.modeling.modeling;
 
+import com.jjoe64.graphview.series.DataPoint;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 import iv.root.modeling.app.App;
-import iv.root.modeling.network.Action;
 
 /**
  * Общее представление системы
@@ -17,6 +19,7 @@ public class Machine {
     private int maxSize;                    // Максимальный размер очереди
     private int lostRequest;                // Сколько заявок было утеряно
     private List<Request> requests;         // Заранее сформированный список заявок
+    private List<DataPoint> points;                 // Список точек для графика
     private int back;                       // Вероятность (в процентах), что обработанная заявка вернётся обратно в очередь
 
     public Machine(Processor pr, Generator gen, int pullSize, int count, int b) {
@@ -26,6 +29,7 @@ public class Machine {
         lostRequest = 0;
         pull = new Pull(pullSize);
         requests = Request.getPullUniqueRequests(count);
+        points = new LinkedList<>();
         back = b;
     }
 
@@ -60,7 +64,7 @@ public class Machine {
      * @param dt    - шаг по времени
      * @return      - количество утерянных заявок
      */
-    public int modelingDT(int dt) {
+    public DataPoint[] modelingDT(int dt) {
         int timeNewRequest = -1;
         int timeProcessingRequest = -1;
 
@@ -77,12 +81,14 @@ public class Machine {
                 lostRequest += pull.put(requests.remove(requests.size()-1)) ? 0 : 1;
                 timeNewRequest = -1;
                 updateMaxSize();
+                points.add(new DataPoint(t, pull.getCurSize()));
             }
 
             if (!pull.isEmpty() && timeProcessingRequest < 0) {
                 Request r = pull.get();
                 processor.receive(r);
                 timeProcessingRequest = t + processor.timeForProcessingRequest();
+                points.add(new DataPoint(t, pull.getCurSize()));
                 App.logI(String.format(Locale.ENGLISH, "\tЗаявка %d ушла на обработку и будет обработана в %d", r.getId(), timeProcessingRequest));
             }
 
@@ -95,11 +101,13 @@ public class Machine {
                     App.logI("\tИ она тут же отправляется на второй круг");
                     lostRequest += pull.put(r) ? 0 : 1;
                     updateMaxSize();
+                    points.add(new DataPoint(t, pull.getCurSize()));
                 }
             }
         }
 
-        return maxSize;
+        DataPoint[] result = new DataPoint[points.size()];
+        return points.toArray(result);
     }
 
 
@@ -133,7 +141,7 @@ public class Machine {
      *
      * @return      - количество утерянных заявок
      */
-    public int modelingAction() {
+    public DataPoint[] modelingAction() {
         int time = 0;
         Event newRequest = new Event();
         scheduledNewRequest(time, newRequest);
@@ -179,7 +187,9 @@ public class Machine {
 
             App.logI("");
         }
-        return 0;
+
+        DataPoint[] result = new DataPoint[points.size()];
+        return points.toArray(result);
     }
 
     private void scheduledNewRequest(int time, Event newRequest) {
@@ -192,6 +202,7 @@ public class Machine {
         processor.receive(r);
         processRequest.scheduled(time + processor.timeForProcessingRequest(), this::actionProcessRequest);
         App.logI(String.format(Locale.ENGLISH, "Заявка %d поступила на обработку и обработается в %d", r.getId(), processRequest.getTime()));
+        points.add(new DataPoint(time, pull.getCurSize()));
     }
 
     void actionNewRequest(int time) {
@@ -199,6 +210,7 @@ public class Machine {
         lostRequest += pull.put(r) ? 0 : 1;
         updateMaxSize();
         App.logI(String.format(Locale.ENGLISH, "Сгенерирована заявка %d (time %d)", r.getId(), time));
+        points.add(new DataPoint(time, pull.getCurSize()));
     }
 
     void actionProcessRequest(int time) {
@@ -210,6 +222,7 @@ public class Machine {
             App.logI(String.format(Locale.ENGLISH, "Заявка %d отправлена на второй круг", r.getId()));
             lostRequest += pull.put(r) ? 0 : 1;
             updateMaxSize();
+            points.add(new DataPoint(time, pull.getCurSize()));
         }
     }
 }
