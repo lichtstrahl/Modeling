@@ -8,7 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.Locale;
 
@@ -48,6 +50,20 @@ public abstract class BaseFragment extends Fragment implements Named {
         modelingObserver.unsubscribe();
     }
 
+    protected void setRangeX(double min, double max) {
+        Viewport viewport = graphView.getViewport();
+        viewport.setXAxisBoundsManual(true);
+        viewport.setMinX(min);
+        viewport.setMaxX(max);
+    }
+
+    protected void setRangeY(double min, double max) {
+        Viewport viewport = graphView.getViewport();
+        viewport.setYAxisBoundsManual(true);
+        viewport.setMinY(min);
+        viewport.setMaxY(max);
+    }
+
     protected void processingDataPoint(DataPoint[] points) {
         progressModeling.setVisibility(View.GONE);
 
@@ -55,6 +71,16 @@ public abstract class BaseFragment extends Fragment implements Named {
                         "Максимальный размер памяти: %d \n"
                 ,machine.getCountLostRequest(), machine.getMaxSize()));
         App.logI(""+points.length);
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+        series.setColor(getResources().getColor(R.color.colorF));
+        series.setThickness(6);
+
+        setRangeY(0, Integer.valueOf(inputPullSize.getText().toString()));
+        setRangeX(0, points[points.length-1].getX());
+
+        graphView.removeAllSeries();
+        graphView.addSeries(series);
     }
 
     protected void stdError(Throwable t) {

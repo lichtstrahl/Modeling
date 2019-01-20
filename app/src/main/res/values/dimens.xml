@@ -14,7 +14,7 @@
     <dimen name="halfMargin">4dp</dimen>
 
     <dimen name="widthInput">80dp</dimen>
-    <dimen name="widthInputX">120dp</dimen>
+    <dimen name="widthInputX">170dp</dimen>
 
     <dimen name="viewSize">35dp</dimen>
 

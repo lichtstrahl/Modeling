@@ -85,52 +85,34 @@
                 android:text="@string/defaultModelingLambda"/>
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:id="@+id/labelInputBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/inputLayoutLambda"
-            android:text="@string/labelInputBack"
-            android:textSize="@dimen/middleText"/>
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayoutBack"
             android:layout_width="@dimen/widthInputX"
             android:layout_height="wrap_content"
-            android:layout_below="@id/labelInputBack"
+            android:layout_below="@id/inputLayoutLambda"
             android:layout_centerHorizontal="true">
             <EditText
                 android:id="@+id/inputBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/stdMargin"
-                android:hint="@string/varLambda"
+                android:hint="@string/labelInputBack"
                 android:inputType="number"
                 android:text="@string/defaultModelingBack"/>
         </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/labelInputPullSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/inputLayoutBack"
-            android:text="@string/labelInputPullSize"
-            android:textSize="@dimen/middleText"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputLayoutPullSize"
             android:layout_width="@dimen/widthInputX"
             android:layout_height="wrap_content"
-            android:layout_below="@id/labelInputPullSize"
+            android:layout_below="@id/inputLayoutBack"
             android:layout_centerHorizontal="true">
             <EditText
                 android:id="@+id/inputPullSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/stdMargin"
-                android:hint="@string/varLambda"
+                android:hint="@string/labelInputPullSize"
                 android:inputType="number"
                 android:text="@string/defaultModelingPullSize"/>
         </android.support.design.widget.TextInputLayout>

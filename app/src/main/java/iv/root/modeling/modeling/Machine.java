@@ -148,7 +148,7 @@ public class Machine {
         Event processRequest = new Event();
 
 
-        while (!requests.isEmpty() || newRequest.isScheduled() || processRequest.isScheduled()) {
+        while (!requests.isEmpty() || newRequest.isScheduled() || processRequest.isScheduled() || !pull.isEmpty()) {
             if (!newRequest.isScheduled() && !requests.isEmpty()) {
                 scheduledNewRequest(time, newRequest);
             }
