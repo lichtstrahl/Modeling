@@ -29,10 +29,13 @@ import io.reactivex.schedulers.Schedulers;
 import iv.root.modeling.R;
 import iv.root.modeling.app.App;
 import iv.root.modeling.network.IntegerResponseObserver;
+import iv.root.modeling.network.ListsResponseObserver;
+import iv.root.modeling.network.dto.ContainerForList;
 import iv.root.modeling.network.dto.ResponseQRNS;
 import iv.root.modeling.util.Evaluation;
 import iv.root.modeling.util.IntegerAdapter;
 import iv.root.modeling.ui.util.ListenerEditText;
+import iv.root.modeling.util.RandomGenerator;
 
 public class RandomActivity extends AppCompatActivity {
     private static final int COUNT_VALUE = 1000;    // Количество запрашиваемых чисел
