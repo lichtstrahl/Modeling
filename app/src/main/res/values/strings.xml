@@ -51,9 +51,18 @@
     <string name="notNumber">Некорректные ланные</string>
     <string name="lab4">Лабораторная 4</string>
     <string name="modeling_action">Дискретно-событийный</string>
-    <string name="tk">Длительность моделирования</string>
+    <string name="requestCount">Количество заявок</string>
     <string name="dt">Шаг по времени</string>
     <string name="run">Запуск</string>
+    <string name="modelingFailed">При моделировании произошла ошибка</string>
+    <string name="labelInputAB">Разброс времени обработки</string>
+    <string name="labelInputLambda">Параметр генерации заявок</string>
 
+    <string name="defaultDT">1</string>
+    <string name="defaultModelingA">5</string>
+    <string name="defaultModelingB">25</string>
+    <string name="defaultModelingLambda">10</string>
+    <string name="defaultModelingDT">1</string>
+    <string name="defaultModelingCount">100</string>
 
 </resources>

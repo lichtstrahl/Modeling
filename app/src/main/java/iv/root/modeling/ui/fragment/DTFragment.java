@@ -4,27 +4,64 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import iv.root.modeling.R;
+import iv.root.modeling.app.App;
+import iv.root.modeling.modeling.Generator;
+import iv.root.modeling.modeling.Machine;
+import iv.root.modeling.modeling.ModelingObserver;
+import iv.root.modeling.modeling.Processor;
+import iv.root.modeling.modeling.UniformRandom;
 
 public class DTFragment extends BaseFragment {
     private static final String NAME = "dt";
+
+    @BindView(R.id.progressModeling)
+    ProgressBar progressModeling;
+    @BindView(R.id.inputCountRequest)
+    EditText inputCountRequest;
+    @BindView(R.id.inputDT)
+    EditText inputDT;
+    @BindView(R.id.inputA)
+    EditText inputA;
+    @BindView(R.id.inputB)
+    EditText inputB;
+    @BindView(R.id.inputLambda)
+    EditText inputLambda;
+    private ModelingObserver modelingObserver;
+    private Machine machine;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modeling_dt, container, false);
+        ButterKnife.bind(this, view);
+
+        modelingObserver = new ModelingObserver(this::processingInt, this::stdError);
+
         setHasOptionsMenu(true);
         return view;
     }
 
     public static DTFragment newInstance() {
-        DTFragment fragment = new DTFragment();
-        return fragment;
+        return new DTFragment();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        modelingObserver.unsubscribe();
     }
 
     @Override
@@ -33,18 +70,38 @@ public class DTFragment extends BaseFragment {
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuItemRunModeling:
-                Toast.makeText(getActivity(), "DT run modeling", Toast.LENGTH_LONG).show();
+                progressModeling.setVisibility(View.VISIBLE);
+                Single.fromCallable(this::runModeling)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(modelingObserver);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private int runModeling() {
+        int count = Integer.valueOf(inputCountRequest.getText().toString());
+        int dt = Integer.valueOf(inputDT.getText().toString());
+        int a = Integer.valueOf(inputA.getText().toString());
+        int b = Integer.valueOf(inputB.getText().toString());
+        double lambda = Double.valueOf(inputLambda.getText().toString());
+        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda));
+        return machine.modelingAction(count, dt);
+    }
+
+    private void processingInt(int result) {
+        App.logI("Result: " + result);
+        progressModeling.setVisibility(View.GONE);
+    }
+
+    private void stdError(Throwable t) {
+        Toast.makeText(getActivity(), R.string.modelingFailed, Toast.LENGTH_LONG).show();
+        App.logE(t.getMessage());
+        progressModeling.setVisibility(View.GONE);
     }
 }

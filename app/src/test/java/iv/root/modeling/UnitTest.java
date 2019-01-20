@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
+import iv.root.modeling.modeling.PoissonRandom;
 import iv.root.modeling.util.Evaluation;
 
 import static org.junit.Assert.assertTrue;
@@ -43,5 +44,12 @@ public class UnitTest {
         }
         pr = Evaluation.evaluation(list);
         pr = Evaluation.evaluationR(list);
+    }
+
+    @Test
+    public void testPoissonRandom() {
+        PoissonRandom random = new PoissonRandom(10);
+        for (int i = 0; i < 10; i++)
+            System.out.println(random.generate());
     }
 }
