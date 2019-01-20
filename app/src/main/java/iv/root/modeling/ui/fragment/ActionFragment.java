@@ -31,27 +31,6 @@ import iv.root.modeling.modeling.Processor;
 
 public class ActionFragment extends BaseFragment {
     private static final String NAME = "Action";
-    @BindView(R.id.progressModeling)
-    ProgressBar progressModeling;
-    @BindView(R.id.inputCountRequest)
-    EditText inputCountRequest;
-    @BindView(R.id.inputA)
-    EditText inputA;
-    @BindView(R.id.inputB)
-    EditText inputB;
-    @BindView(R.id.inputLambda)
-    EditText inputLambda;
-    @BindView(R.id.inputBack)
-    EditText inputBack;
-    @BindView(R.id.inputPullSize)
-    EditText inputPullSize;
-    @BindView(R.id.viewResult)
-    TextView viewResult;
-    @BindView(R.id.graphView)
-    GraphView graphView;
-
-    private ModelingObserver modelingObserver;
-    private Machine machine;
 
     @Nullable
     @Override
@@ -71,12 +50,6 @@ public class ActionFragment extends BaseFragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        modelingObserver.unsubscribe();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuItemRunModeling:
@@ -89,15 +62,6 @@ public class ActionFragment extends BaseFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void processingDataPoint(DataPoint[] points) {
-        progressModeling.setVisibility(View.GONE);
-
-        viewResult.setText(String.format(Locale.ENGLISH, "Количество утерянных заявок: %d \n" +
-                        "Максимальный размер памяти: %d \n"
-                ,machine.getCountLostRequest(), machine.getMaxSize()));
-        App.logI(""+points.length);
     }
 
     private DataPoint[] runModeling() {
@@ -114,12 +78,6 @@ public class ActionFragment extends BaseFragment {
 
         machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize, count, back);
         return machine.modelingAction();
-    }
-
-    private void stdError(Throwable t) {
-        Toast.makeText(getActivity(), R.string.modelingFailed, Toast.LENGTH_LONG).show();
-        App.logE(t.getMessage());
-        progressModeling.setVisibility(View.GONE);
     }
 
     @Override
