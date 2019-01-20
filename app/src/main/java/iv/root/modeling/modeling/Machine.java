@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import io.reactivex.functions.Action;
 import iv.root.modeling.app.App;
+import iv.root.modeling.network.Action;
 
 /**
  * Общее представление системы
@@ -146,39 +146,38 @@ public class Machine {
             }
 
             if (!processRequest.isScheduled() && !pull.isEmpty()) {
-                Request r = pull.get();
-                processor.receive(r);
-                processRequest.scheduled(time + processor.timeForProcessingRequest(), processRequest::actionProcessRequest);
-                App.logI(String.format(Locale.ENGLISH, "Заявка %d поступила на обработку и обработается в %d", r.getId(), processRequest.getTime()));
+                scheduledProcessRequest(time, processRequest);
             }
 
             if (newRequest.isScheduled() && !processRequest.isScheduled()) {
-                newRequest.action();
                 time = newRequest.getTime();
+                newRequest.action(time);
             }
 
             if (processRequest.isScheduled() && !newRequest.isScheduled()) {
-                processRequest.action();
                 time = processRequest.getTime();
+                processRequest.action(time);
             }
 
             if (newRequest.isScheduled() && processRequest.isScheduled()) {
                 if (newRequest.getTime() < processRequest.getTime()) {
-                    newRequest.action();
                     time = newRequest.getTime();
+                    newRequest.action(time);
                 }
 
                 if (newRequest.getTime() == processRequest.getTime()) {
-                    newRequest.action();
-                    processRequest.action();
                     time = newRequest.getTime();
+                    newRequest.action(time);
+                    processRequest.action(time);
                 }
 
                 if (newRequest.getTime() > processRequest.getTime()) {
-                    processRequest.action();
                     time = processRequest.getTime();
+                    processRequest.action(time);
                 }
             }
+
+            App.logI("");
         }
         return 0;
     }
@@ -188,28 +187,31 @@ public class Machine {
         App.logI(String.format(Locale.ENGLISH,"Следующая заявка появится в %d",newRequest.getTime()));
     }
 
+    private void scheduledProcessRequest(int time, Event processRequest) {
+        Request r = pull.get();
+        processor.receive(r);
+        processRequest.scheduled(time + processor.timeForProcessingRequest(), processRequest::actionProcessRequest);
+        App.logI(String.format(Locale.ENGLISH, "Заявка %d поступила на обработку и обработается в %d", r.getId(), processRequest.getTime()));
+    }
+
     class Event {
         private int time;
         private boolean scheduled;
-        private Action action;
+        private Action<Integer> action;
 
 
         public int getTime() {
             return time;
         }
 
-        public void scheduled(int time, Action a) {
+        public void scheduled(int time, Action<Integer> a) {
             this.time = time;
             action = a;
             scheduled = true;
         }
 
-        public void action() {
-            try {
-                action.run();
-            } catch (Exception e) {
-                App.logE("Event: " + e.getMessage());
-            }
+        public void action(int time) {
+            action.run(time);
             scheduled = false;
         }
 
@@ -217,16 +219,16 @@ public class Machine {
             return scheduled;
         }
 
-        void actionNewRequest() {
+        void actionNewRequest(int time) {
             Request r = requests.remove(requests.size()-1);
             lostRequest += pull.put(r) ? 0 : 1;
             updateMaxSize();
-            App.logI(String.format(Locale.ENGLISH, "Сгенерирована заявка %d (time %d)", r.getId(), getTime()));
+            App.logI(String.format(Locale.ENGLISH, "Сгенерирована заявка %d (time %d)", r.getId(), time));
         }
 
-        void actionProcessRequest() {
+        void actionProcessRequest(int time) {
             Request r = processor.release();
-            App.logI(String.format(Locale.ENGLISH, "Заявка %d обработана (time %d)", r.getId(), getTime()));
+            App.logI(String.format(Locale.ENGLISH, "Заявка %d обработана (time %d)", r.getId(), time));
 
             int moveBack = new Random().nextInt(100);
             if (moveBack < back) {
