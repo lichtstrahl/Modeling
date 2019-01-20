@@ -67,5 +67,7 @@
     <string name="labelInputBack">Процент возврата</string>
     <string name="defaultModelingBack">50</string>
     <string name="incorrectData">Некорректные данные. Моделирование может быть неточным</string>
+    <string name="labelInputPullSize">Размер памяти</string>
+    <string name="defaultModelingPullSize">15</string>
 
 </resources>

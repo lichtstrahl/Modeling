@@ -4,17 +4,23 @@ import java.util.ArrayDeque;
 
 public class Pull {
     private ArrayDeque<Request> queue;      // Очередь
+    private int size;
 
-    public Pull() {
+    public Pull(int s) {
         queue = new ArrayDeque<>();
+        size = s;
     }
 
     public int getCurSize() {
         return queue.size();
     }
 
-    public void put(Request r) {
-        queue.addLast(r);
+    public boolean put(Request r) {
+        if (queue.size() < size ) {
+            queue.addLast(r);
+            return true;
+        }
+        return false;
     }
 
     public Request get() {

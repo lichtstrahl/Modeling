@@ -1,7 +1,5 @@
 package iv.root.modeling.modeling;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -16,41 +14,22 @@ public class Machine {
     private Processor processor;            // ОА (равномерное распределение)
     private Pull pull;                      // Накопитель заявок
     private int maxSize;                    // Максимальный размер очереди
-    private int countRequest;               // Сколько заявок было обработано
+    private int lostRequest;               // Сколько заявок было утеряно
 
-    public Machine(Processor pr, Generator gen) {
+    public Machine(Processor pr, Generator gen, int pullSize) {
         generator = gen;
         processor = pr;
         maxSize = 0;
-        countRequest = 0;
-        pull = new Pull();
+        lostRequest = 0;
+        pull = new Pull(pullSize);
     }
 
-    public int getCountRequest() {
-        return countRequest;
+    public int getCountLostRequest() {
+        return lostRequest;
     }
 
     public int getMaxSize() {
         return maxSize;
-    }
-
-    /**
-     *
-     * @param back - вероятность (в процентах) того, что заявка вернётся обратно в очередь
-     */
-    public void processRequest(int back) {
-        if (!pull.isEmpty()) {
-            Request r = pull.get();
-            App.logI("Обработана заявка: " + r.getId());
-            int backMove = new Random().nextInt(100);
-            if (back > backMove) {
-                pull.put(r);
-                App.logI(String.format(Locale.ENGLISH, "Заявка %d ушла на второй круг", r.getId()));
-            }
-
-        } else {
-            App.logI("Обращение к пустой очереди");
-        }
     }
 
     /**
@@ -83,7 +62,6 @@ public class Machine {
         List<Request> requests = Request.getPullUniqueRequests(count);
         int timeNewRequest = -1;
         int timeProcessingRequest = -1;
-        int maxSize = 0;
 
         for (int t = 0; !requests.isEmpty() || !pull.isEmpty() || timeProcessingRequest > 0; t += dt) {
             App.logI(String.format(Locale.ENGLISH, "time: %d; count: %d;", t, requests.size()));
@@ -95,7 +73,7 @@ public class Machine {
             if (t >= timeNewRequest && timeNewRequest > 0) {
                 Request r = requests.get(requests.size()-1);
                 App.logI("\tГенератор произвёл заявку: " + r.getId());
-                pull.put(requests.remove(requests.size()-1));
+                lostRequest += pull.put(requests.remove(requests.size()-1)) ? 0 : 1;
                 timeNewRequest = -1;
                 if (pull.getCurSize() > maxSize) {
                     maxSize = pull.getCurSize();
@@ -117,7 +95,7 @@ public class Machine {
                 int backMove = new Random().nextInt(100);
                 if (backMove < back) {
                     App.logI("\tИ она тут же отправляется на второй круг");
-                    pull.put(r);
+                    lostRequest += pull.put(r) ? 0 : 1;
                 }
             }
         }

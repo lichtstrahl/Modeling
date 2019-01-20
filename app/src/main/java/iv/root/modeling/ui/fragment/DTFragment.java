@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,10 @@ public class DTFragment extends BaseFragment {
     EditText inputLambda;
     @BindView(R.id.inputBack)
     EditText inputBack;
+    @BindView(R.id.inputPullSize)
+    EditText inputPullSize;
+    @BindView(R.id.viewResult)
+    TextView viewResult;
     private ModelingObserver modelingObserver;
     private Machine machine;
 
@@ -92,19 +99,23 @@ public class DTFragment extends BaseFragment {
         int b = Integer.valueOf(inputB.getText().toString());
         double lambda = Double.valueOf(inputLambda.getText().toString());
         int back = Integer.valueOf(inputBack.getText().toString());
+        int pullSize = Integer.valueOf(inputPullSize.getText().toString());
 
-        if (!(dt*4 < lambda && a != 0 && b != 0 && a > dt && dt != 0 && count != 0)) {
+        if (!(dt*4 < lambda && a != 0 && b != 0 && a > dt && dt != 0 && count != 0 && pullSize > 0)) {
             getActivity().runOnUiThread(()->Toast.makeText(this.getActivity(), R.string.incorrectData, Toast.LENGTH_LONG).show());
         }
 
-        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda));
+        machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda), pullSize);
         return machine.modelingDT(count, dt, back);
     }
 
     private void processingInt(int result) {
         App.logI("Result: " + result);
         progressModeling.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), "Максимальны объем накопителя: " + result, Toast.LENGTH_LONG).show();
+
+        viewResult.setText(String.format(Locale.ENGLISH, "Количество утерянных заявок: %d \n" +
+                                                                "Максимальный размер памяти: %d \n"
+                ,machine.getCountLostRequest(), machine.getMaxSize()));
     }
 
     private void stdError(Throwable t) {
