@@ -85,7 +85,7 @@ public class GraphActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_layout, menu);
+        inflater.inflate(R.menu.menu_distribution, menu);
         return true;
     }
 

@@ -3,6 +3,7 @@ package iv.root.modeling.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ public class QueueActivity extends AppCompatActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     PagerAdapter pagerAdapter;
+    @BindView(R.id.pagerTabs)
+    PagerTabStrip pagerTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

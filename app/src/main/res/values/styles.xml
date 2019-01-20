@@ -14,4 +14,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="TabsStyle">
+        <item name="android:textSize">@dimen/middleText</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
 </resources>

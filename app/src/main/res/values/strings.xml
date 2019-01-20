@@ -50,6 +50,10 @@
     <string name="needTenNumber">Должно быть ровно 10 чисел</string>
     <string name="notNumber">Некорректные ланные</string>
     <string name="lab4">Лабораторная 4</string>
+    <string name="modeling_action">Дискретно-событийный</string>
+    <string name="tk">Длительность моделирования</string>
+    <string name="dt">Шаг по времени</string>
+    <string name="run">Запуск</string>
 
 
 </resources>
