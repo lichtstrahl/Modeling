@@ -72,83 +72,11 @@ public class Evaluation {
         // Квантиль со степенями свободы либо 10 либо 1000
         double T = (n == 10) ? STUDENT_10_0975 : STUDENT_1000_0975;
 
-        if (t > T) {  // Тренд найден хотя бы в одной из виличин
-            return 1.0;
-        } else {                // В обеих величинах отсутствует тренд
-            return t/T;
-        }
-    }
 
-    /** Проверка на равномерное распределение для последовательности Xi=[0..9]
-     *
-     * @param values - последовательность чисел
-     * @return вероятность того, что данная последовательность распределена равномерно/дискретно
-     */
-    public static double evaluationR(List<Integer> values) {
-        int n = values.size();
-        // Необходимо составить вариацонный ряд
-        List<Communication> var = new LinkedList<>();
-        for (Integer v : values) {
-            int index;
-            for (index = 0; index < var.size(); index++) {
-                if (var.get(index).x == v) break;
-            }
+        double pr1 = (t>T) ? 1.0 : t/T;
+        double pr2 = (t_ >T ) ? 1.0 : t/T;
 
-            if (index == var.size()) {
-                var.add(new Communication(v, 1));
-            } else {
-                var.get(index).inc();
-            }
-        }
-
-        double M_ = n*1.0 / var.size();
-
-        // Xнабл
-        double sum = 0.0;
-        for (int i = 0; i < var.size(); i++) {
-            sum += pow((var.get(i).m - M_), 2) / M_;
-        }
-
-        double pr = 0.0;
-        // Число степеней свободы
-        int k = var.size()-1;
-        if (k == 0)
-            return 1.0;
-
-        for (int i = 9; i > 0; i--) {
-            double Xi = Xi2(k, i*0.1);
-            if (sum < Xi) {
-                pr = 1-i*0.1;
-            }
-        }
-
-        return pr;
-    }
-
-    // 0.1 <= alpha <= 0.9 - значимость
-    private static double Xi2(int n, double alpha) {
-        double d = alpha < 0.5 ? -2.0637*pow(log(1/alpha) - 0.16, 0.4274) + 1.5774 : 2.0637*pow(log(1/(1-alpha)) - 0.16, 0.4274) - 1.5774;
-        double A = d*sqrt(2);
-        double B = 2/3 * (d*d-1);
-        double C = d* (d*d-7)/(9*sqrt(2));
-        double D = -(6*pow(d,4) + 15*d*d - 32)/(405);
-        double E = d * (9*pow(d,4) + 256*d*d - 433)/(4860*sqrt(2));
-
-        return n + A*sqrt(n) + B + C/sqrt(n) + D/n + E/(n*sqrt(n));
-    }
-
-    static class Communication {
-        private int x;
-        private int m;
-
-        public Communication(int x, int m) {
-            this.x = x;
-            this.m = m;
-        }
-
-        public void inc() {
-            m++;
-        }
+        return (pr1*3+pr2)/4;
     }
 
     /**

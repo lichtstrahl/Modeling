@@ -1,5 +1,7 @@
 package iv.root.modeling.util;
 
+import java.util.Random;
+
 public class RandomGenerator {
     private static double m34 = 28395423107.0;
     private static double m35 = 34359738368.0;

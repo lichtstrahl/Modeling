@@ -21,7 +21,6 @@ public class UnitTest {
             list.add(i);
 
         double pr = Evaluation.evaluation(list);
-        pr = Evaluation.evaluationR(list);
 
         assertTrue(pr > 0.5);
 
@@ -30,7 +29,6 @@ public class UnitTest {
             list.add(i %500);
 
         pr = Evaluation.evaluation(list);
-        pr = Evaluation.evaluationR(list);
 
         assertTrue(pr > 0.5);
 
@@ -38,7 +36,6 @@ public class UnitTest {
         for (int i = 0; i < 10; i++)
             list.add(0);
         pr = Evaluation.evaluation(list);
-        pr = Evaluation.evaluationR(list);
 
         list.clear();
         for (int i = 0; i < 500; i++) {
@@ -46,7 +43,6 @@ public class UnitTest {
             list.add(0);
         }
         pr = Evaluation.evaluation(list);
-        pr = Evaluation.evaluationR(list);
     }
 
     @Test
@@ -62,6 +58,14 @@ public class UnitTest {
         }
 
         System.out.println("min: " + min + " max: " + max);
+    }
+
+    @Test
+    public void testRandomGenerator() {
+        RandomGenerator.rand(0);
+        for (int i = 0; i < 10; i++) {
+            System.out.println((int)(10 + Math.round(RandomGenerator.rand(2)*1000) % 90));
+        }
     }
 
     @Test

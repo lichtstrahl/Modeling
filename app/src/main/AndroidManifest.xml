@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.QueueActivity">
-
+        <activity android:name=".ui.activity.QueueActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
 
         <activity android:name=".ui.activity.GraphActivity" />
