@@ -183,59 +183,33 @@ public class Machine {
     }
 
     private void scheduledNewRequest(int time, Event newRequest) {
-        newRequest.scheduled(time + generator.timeForNextRequest(), newRequest::actionNewRequest);
+        newRequest.scheduled(time + generator.timeForNextRequest(), this::actionNewRequest);
         App.logI(String.format(Locale.ENGLISH,"Следующая заявка появится в %d",newRequest.getTime()));
     }
 
     private void scheduledProcessRequest(int time, Event processRequest) {
         Request r = pull.get();
         processor.receive(r);
-        processRequest.scheduled(time + processor.timeForProcessingRequest(), processRequest::actionProcessRequest);
+        processRequest.scheduled(time + processor.timeForProcessingRequest(), this::actionProcessRequest);
         App.logI(String.format(Locale.ENGLISH, "Заявка %d поступила на обработку и обработается в %d", r.getId(), processRequest.getTime()));
     }
 
-    class Event {
-        private int time;
-        private boolean scheduled;
-        private Action<Integer> action;
+    void actionNewRequest(int time) {
+        Request r = requests.remove(requests.size()-1);
+        lostRequest += pull.put(r) ? 0 : 1;
+        updateMaxSize();
+        App.logI(String.format(Locale.ENGLISH, "Сгенерирована заявка %d (time %d)", r.getId(), time));
+    }
 
+    void actionProcessRequest(int time) {
+        Request r = processor.release();
+        App.logI(String.format(Locale.ENGLISH, "Заявка %d обработана (time %d)", r.getId(), time));
 
-        public int getTime() {
-            return time;
-        }
-
-        public void scheduled(int time, Action<Integer> a) {
-            this.time = time;
-            action = a;
-            scheduled = true;
-        }
-
-        public void action(int time) {
-            action.run(time);
-            scheduled = false;
-        }
-
-        public boolean isScheduled() {
-            return scheduled;
-        }
-
-        void actionNewRequest(int time) {
-            Request r = requests.remove(requests.size()-1);
+        int moveBack = new Random().nextInt(100);
+        if (moveBack < back) {
+            App.logI(String.format(Locale.ENGLISH, "Заявка %d отправлена на второй круг", r.getId()));
             lostRequest += pull.put(r) ? 0 : 1;
             updateMaxSize();
-            App.logI(String.format(Locale.ENGLISH, "Сгенерирована заявка %d (time %d)", r.getId(), time));
-        }
-
-        void actionProcessRequest(int time) {
-            Request r = processor.release();
-            App.logI(String.format(Locale.ENGLISH, "Заявка %d обработана (time %d)", r.getId(), time));
-
-            int moveBack = new Random().nextInt(100);
-            if (moveBack < back) {
-                App.logI(String.format(Locale.ENGLISH, "Заявка %d отправлена на второй круг", r.getId()));
-                lostRequest += pull.put(r) ? 0 : 1;
-                updateMaxSize();
-            }
         }
     }
 }
