@@ -1,6 +1,6 @@
 package iv.root.modeling.distribution.erlang;
 
-import iv.root.modeling.util.Factorial;
+import iv.root.modeling.distribution.util.Factorial;
 import iv.root.modeling.distribution.DistributionAPI;
 
 public class ErlangDistribution implements DistributionAPI {

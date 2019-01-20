@@ -1,4 +1,4 @@
-package iv.root.modeling.ui;
+package iv.root.modeling.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import iv.root.modeling.network.IntegerResponseObserver;
 import iv.root.modeling.network.dto.ResponseQRNS;
 import iv.root.modeling.util.Evaluation;
 import iv.root.modeling.util.IntegerAdapter;
-import iv.root.modeling.util.ListenerEditText;
+import iv.root.modeling.ui.util.ListenerEditText;
 
 public class RandomActivity extends AppCompatActivity {
     private static final int COUNT_VALUE = 100;    // Количество запрашиваемых чисел

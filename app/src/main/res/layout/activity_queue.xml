@@ -5,6 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.QueueActivity">
+    tools:context=".ui.activity.QueueActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pagerTabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package iv.root.modeling.util;
+package iv.root.modeling.ui.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;

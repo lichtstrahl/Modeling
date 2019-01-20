@@ -1,4 +1,4 @@
-package iv.root.modeling.ui;
+package iv.root.modeling.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,4 +1,4 @@
-package iv.root.modeling.util;
+package iv.root.modeling.distribution.util;
 
 public class Factorial {
     public static long factorial(long n)

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.QueueActivity">
+        <activity android:name=".ui.activity.QueueActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -20,13 +20,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.GraphActivity" />
+        <activity android:name=".ui.activity.GraphActivity" />
 
-        <activity android:name=".ui.StartActivity">
+        <activity android:name=".ui.activity.StartActivity">
         </activity>
 
         <activity
-            android:name=".ui.RandomActivity"
+            android:name=".ui.activity.RandomActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
