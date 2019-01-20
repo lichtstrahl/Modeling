@@ -2,11 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/backgroundModelingDT">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutTk"
+        android:id="@+id/inputLayoutCountRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
@@ -19,27 +18,12 @@
             android:text="@string/defaultModelingCount"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/inputLayoutDT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputLayoutTk">
-        <EditText
-            android:id="@+id/inputDT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/stdMargin"
-            android:hint="@string/dt"
-            android:inputType="number"
-            android:text="@string/defaultModelingDT"/>
-    </android.support.design.widget.TextInputLayout>
-
     <TextView
         android:id="@+id/labelInputAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/inputLayoutDT"
+        android:layout_below="@id/inputLayoutCountRequest"
         android:text="@string/labelInputAB"
         android:textSize="@dimen/middleText"/>
 

@@ -102,4 +102,8 @@ public class Machine {
 
         return maxSize;
     }
+
+    public int modelingAction(int count, int back) {
+        return 0;
+    }
 }
