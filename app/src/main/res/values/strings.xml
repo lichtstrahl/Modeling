@@ -64,5 +64,8 @@
     <string name="defaultModelingLambda">10</string>
     <string name="defaultModelingDT">1</string>
     <string name="defaultModelingCount">100</string>
+    <string name="labelInputBack">Процент возврата</string>
+    <string name="defaultModelingBack">50</string>
+    <string name="incorrectData">Некорректные данные. Моделирование может быть неточным</string>
 
 </resources>

@@ -48,8 +48,16 @@ public class UnitTest {
 
     @Test
     public void testPoissonRandom() {
-        PoissonRandom random = new PoissonRandom(10);
-        for (int i = 0; i < 10; i++)
-            System.out.println(random.generate());
+        PoissonRandom random = new PoissonRandom(20);
+        int min = random.generate();
+        int max = min;
+
+        for (int i = 1; i < 10; i++) {
+            int r = random.generate();
+            if (r > max) max = r;
+            if (r < min) min = r;
+        }
+
+        System.out.println("min: " + min + " max: " + max);
     }
 }

@@ -22,7 +22,6 @@ import iv.root.modeling.modeling.Generator;
 import iv.root.modeling.modeling.Machine;
 import iv.root.modeling.modeling.ModelingObserver;
 import iv.root.modeling.modeling.Processor;
-import iv.root.modeling.modeling.UniformRandom;
 
 public class DTFragment extends BaseFragment {
     private static final String NAME = "dt";
@@ -39,6 +38,8 @@ public class DTFragment extends BaseFragment {
     EditText inputB;
     @BindView(R.id.inputLambda)
     EditText inputLambda;
+    @BindView(R.id.inputBack)
+    EditText inputBack;
     private ModelingObserver modelingObserver;
     private Machine machine;
 
@@ -90,13 +91,20 @@ public class DTFragment extends BaseFragment {
         int a = Integer.valueOf(inputA.getText().toString());
         int b = Integer.valueOf(inputB.getText().toString());
         double lambda = Double.valueOf(inputLambda.getText().toString());
+        int back = Integer.valueOf(inputBack.getText().toString());
+
+        if (!(dt*4 < lambda && a != 0 && b != 0 && a > dt && dt != 0 && count != 0)) {
+            getActivity().runOnUiThread(()->Toast.makeText(this.getActivity(), R.string.incorrectData, Toast.LENGTH_LONG).show());
+        }
+
         machine = new Machine(Processor.getInstance(a, b), Generator.getInstance(lambda));
-        return machine.modelingAction(count, dt);
+        return machine.modelingDT(count, dt, back);
     }
 
     private void processingInt(int result) {
         App.logI("Result: " + result);
         progressModeling.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), "Максимальны объем накопителя: " + result, Toast.LENGTH_LONG).show();
     }
 
     private void stdError(Throwable t) {
