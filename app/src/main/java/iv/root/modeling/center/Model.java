@@ -14,6 +14,7 @@ public class Model {
 
     public Model(double dt) {
         timeStep = dt;
+        client = new Client(8, 12);
         operators = new Operator[] {
                 new Operator(15, 25, processingSystems[0]),
                 new Operator(20, 60, processingSystems[1]),
@@ -45,7 +46,7 @@ public class Model {
         currentTime = 0;
     }
 
-    public void moveOn() {
+    public void step() {
         currentTime += timeStep;
 
         if (client.moveOn(timeStep)) {
@@ -76,5 +77,17 @@ public class Model {
                 countRequest++;
             }
         }
+    }
+
+    public int getCountRequest() {
+        return countRequest;
+    }
+
+    public int getCountMissRequest() {
+        return countMissRequest;
+    }
+
+    public double getModelingTime() {
+        return currentTime;
     }
 }

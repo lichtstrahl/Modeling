@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/stdMargin"
             android:hint="@string/dt"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:text="@string/defaultDT"/>
     </android.support.design.widget.TextInputLayout>
 

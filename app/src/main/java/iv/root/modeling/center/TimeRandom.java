@@ -14,6 +14,8 @@ public class TimeRandom {
 
     public double nextValue() {
         int delta = maxTimeInterval - minTimeInterval;
+        if (delta == 0)
+            return minTimeInterval;
         return minTimeInterval + random.nextInt(delta) + random.nextDouble();
     }
 

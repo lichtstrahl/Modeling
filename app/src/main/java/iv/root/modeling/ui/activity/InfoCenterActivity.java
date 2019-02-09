@@ -8,10 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import iv.root.modeling.R;
 import iv.root.modeling.app.App;
+import iv.root.modeling.center.Model;
 
 public class InfoCenterActivity extends AppCompatActivity {
     @BindView(R.id.inputDT)
@@ -40,10 +43,32 @@ public class InfoCenterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuItemRunModeling:
-                App.logI("Запуск моделирования");
+                startModeling();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void startModeling() {
+        try {
+            Double dt = Double.valueOf(inputDT.getText().toString());
+            Model model = new Model(dt);
+            model.restart();
+
+            while (model.getCountRequest() < 300) {
+                model.step();
+            }
+
+            double p = (double)model.getCountMissRequest() / (model.getCountRequest() + model.getCountMissRequest());
+
+            App.logI("Заявок обработано: " + model.getCountRequest());
+            App.logI("Заявок отклонено: " + model.getCountMissRequest());
+            App.logI(String.format(Locale.ENGLISH, "Время моделирования: %8.3f", model.getModelingTime()));
+            App.logI("Вероятность отказа: " + p);
+
+        } catch (NumberFormatException e){
+            App.logE("Не удалось прочитать число dt");
         }
     }
 }
