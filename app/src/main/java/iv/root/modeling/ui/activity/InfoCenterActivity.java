@@ -6,12 +6,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import iv.root.modeling.R;
 import iv.root.modeling.app.App;
 import iv.root.modeling.center.Model;
@@ -19,6 +27,16 @@ import iv.root.modeling.center.Model;
 public class InfoCenterActivity extends AppCompatActivity {
     @BindView(R.id.inputDT)
     EditText inputDT;
+    @BindView(R.id.viewResult)
+    ViewGroup viewResult;
+    @BindView(R.id.viewCountRequest)
+    TextView viewCountRequest;
+    @BindView(R.id.viewMissingRequest)
+    TextView viewMissingRequest;
+    @BindView(R.id.viewP)
+    TextView viewP;
+    private Disposable disposableResult;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +68,37 @@ public class InfoCenterActivity extends AppCompatActivity {
         }
     }
 
-    private void startModeling() {
-        try {
-            int dt = Integer.valueOf(inputDT.getText().toString());
-            Model model = new Model(dt);
-            model.restart();
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (disposableResult != null) disposableResult.dispose();
+    }
 
+    private void startModeling() {
+        int dt = Integer.valueOf(inputDT.getText().toString());
+        if (dt > 10) {
+            Toast.makeText(this, R.string.incorrectData, Toast.LENGTH_LONG).show();
+        }
+        Model model = new Model(dt);
+        model.restart();
+
+        viewResult.setVisibility(View.GONE);
+        disposableResult = Single.fromCallable(() -> {
             while (model.getCountRequest() < 300) {
                 model.step();
             }
 
-            double p = (double)model.getCountMissRequest() / (model.getCountRequest() + model.getCountMissRequest());
+            return  (double)model.getCountMissRequest() / (model.getCountRequest() + model.getCountMissRequest());
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(p -> {
+            viewResult.setVisibility(View.VISIBLE);
 
-            App.logI("Заявок обработано: " + model.getCountRequest());
-            App.logI("Заявок отклонено: " + model.getCountMissRequest());
-            App.logI(String.format(Locale.ENGLISH, "Время моделирования: %5d", model.getModelingTime()));
-            App.logI("Вероятность отказа: " + p);
+            viewCountRequest.setText("Заявок обработано: " + model.getCountRequest());
+            viewMissingRequest.setText("Заявок отклонено: " + model.getCountMissRequest());
+            viewP.setText(String.format(Locale.ENGLISH,"Вероятность отказа: %d%%", Math.round(p*100)));
 
-        } catch (NumberFormatException e){
-            App.logE("Не удалось прочитать число dt");
-        }
+        });
     }
 }
