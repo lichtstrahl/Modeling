@@ -24,6 +24,10 @@ public class StartActivity extends AppCompatActivity {
         QueueActivity.start(this);
     }
 
+    @OnClick(R.id.buttonLab5)
+    public void clickStartLab5() {
+        InfoCenterActivity.start(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

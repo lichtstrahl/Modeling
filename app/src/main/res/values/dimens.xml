@@ -10,6 +10,7 @@
     <dimen name="middleIcon">64dp</dimen>
     <dimen name="bigIcon">88dp</dimen>
 
+    <dimen name="bigMargin">16dp</dimen>
     <dimen name="stdMargin">8dp</dimen>
     <dimen name="halfMargin">4dp</dimen>
 

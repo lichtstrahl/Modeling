@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menuItemRunModeling"
         android:title="@string/run"
-        android:icon="@drawable/ic_play"
+        android:icon="@drawable/ic_play_circle_filled"
         android:visible="true"
         app:showAsAction="ifRoom"
         />

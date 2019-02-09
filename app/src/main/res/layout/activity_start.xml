@@ -32,4 +32,13 @@
         style="@style/ButtonStyle"
         android:text="@string/lab4"/>
 
+    <Button
+        android:id="@+id/buttonLab5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/buttonLab4"
+        style="@style/ButtonStyle"
+        android:text="@string/lab5"/>
+
 </RelativeLayout>
