@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class TimeRandom {
     private Random random;
-    private int minTimeInterval, maxTimeInterval;
+    private int minTimeInterval;
+    private int maxTimeInterval;
 
     public TimeRandom(int min, int max) {
         this.random = new Random(System.currentTimeMillis());
@@ -12,11 +13,9 @@ public class TimeRandom {
         maxTimeInterval = max;
     }
 
-    public double nextValue() {
+    public int nextValue() {
         int delta = maxTimeInterval - minTimeInterval;
-        if (delta == 0)
-            return minTimeInterval;
-        return minTimeInterval + random.nextInt(delta) + random.nextDouble();
+        return minTimeInterval + ((delta != 0) ? random.nextInt(delta) : 0);
     }
 
     public int getMinTimeInterval() {

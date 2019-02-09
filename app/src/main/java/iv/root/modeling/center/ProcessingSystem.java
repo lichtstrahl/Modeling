@@ -26,7 +26,7 @@ public class ProcessingSystem {
      * @param dt - временной шаг
      * @return - закончил ли вычислитель работу на этом шаге
      */
-    public boolean continueService(double dt) {
+    public boolean continueService(int dt) {
         if (computer.isActive()) {
             computer.continueService(dt);
             if (!computer.isActive()) {

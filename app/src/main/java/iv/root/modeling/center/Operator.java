@@ -16,7 +16,7 @@ public class Operator extends ServiceUnit {
      * @param dt
      */
     @Override
-    public void continueService(double dt) {
+    public void continueService(int dt) {
         boolean wasActive = isActive();
         super.continueService(dt);
         if (wasActive && !isActive()) {

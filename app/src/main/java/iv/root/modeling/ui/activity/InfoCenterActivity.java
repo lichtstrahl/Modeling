@@ -52,7 +52,7 @@ public class InfoCenterActivity extends AppCompatActivity {
 
     private void startModeling() {
         try {
-            Double dt = Double.valueOf(inputDT.getText().toString());
+            int dt = Integer.valueOf(inputDT.getText().toString());
             Model model = new Model(dt);
             model.restart();
 
@@ -64,7 +64,7 @@ public class InfoCenterActivity extends AppCompatActivity {
 
             App.logI("Заявок обработано: " + model.getCountRequest());
             App.logI("Заявок отклонено: " + model.getCountMissRequest());
-            App.logI(String.format(Locale.ENGLISH, "Время моделирования: %8.3f", model.getModelingTime()));
+            App.logI(String.format(Locale.ENGLISH, "Время моделирования: %5d", model.getModelingTime()));
             App.logI("Вероятность отказа: " + p);
 
         } catch (NumberFormatException e){

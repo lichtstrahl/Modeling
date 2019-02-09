@@ -10,7 +10,7 @@ package iv.root.modeling.center;
  */
 public class Client {
     private TimeRandom timeRandom;
-    private double nextRequestInterval;
+    private int nextRequestInterval;
 
     public Client(int minRequestTime, int maxRequestTime) {
         timeRandom = new TimeRandom(minRequestTime, maxRequestTime);
@@ -22,7 +22,7 @@ public class Client {
      * @param dt - время, которое прошло
      * @return - был ли сгенерирован новый клиент
      */
-    public boolean moveOn(double dt) {
+    public boolean moveOn(int dt) {
         nextRequestInterval -= dt;
         if (nextRequestInterval < 0) {
             nextRequestInterval = timeRandom.nextValue();

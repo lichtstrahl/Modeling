@@ -5,7 +5,7 @@ package iv.root.modeling.center;
  */
 public class ServiceUnit {
     private boolean active;         // Активен блок или нет
-    private double serviceTime;     // Необходимое время на работу
+    private int serviceTime;     // Необходимое время на работу
     private TimeRandom timeRandom;
 
     public ServiceUnit(int minTime, int maxTime) {
@@ -17,7 +17,7 @@ public class ServiceUnit {
         serviceTime = timeRandom.nextValue();
     }
 
-    public void continueService(double dt) {
+    public void continueService(int dt) {
         if (active) {
             serviceTime -= dt;
             active = serviceTime > 0;

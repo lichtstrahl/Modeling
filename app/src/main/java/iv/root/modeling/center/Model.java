@@ -7,12 +7,12 @@ public class Model {
             new ProcessingSystem(15, 15),
             new ProcessingSystem(30, 30)
     };
-    private double timeStep;
-    private double currentTime;
+    private int timeStep;
+    private int currentTime;
     private int countRequest;       // Количество обработанных заявок
     private int countMissRequest;   // Количество утерянных заявок
 
-    public Model(double dt) {
+    public Model(int dt) {
         timeStep = dt;
         client = new Client(8, 12);
         operators = new Operator[] {
@@ -20,26 +20,6 @@ public class Model {
                 new Operator(20, 60, processingSystems[1]),
                 new Operator(30, 50, processingSystems[0]),
         };
-    }
-
-    /**
-     * Активна ли система. Однако могут быть ещё и заявки в очереди у компьютеров
-     * @return - ture, если хотя бы один из операторов или компьютеров продолжает работать
-     */
-    public boolean isActive() {
-        for (Operator o : operators) {
-            if (o.isActive()) {
-                return true;
-            }
-        }
-
-        for (ProcessingSystem system : processingSystems) {
-            if (system.isActive()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public void restart() {
@@ -87,7 +67,7 @@ public class Model {
         return countMissRequest;
     }
 
-    public double getModelingTime() {
+    public int getModelingTime() {
         return currentTime;
     }
 }
