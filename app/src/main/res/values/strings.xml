@@ -70,5 +70,16 @@
     <string name="labelInputPullSize">Размер памяти</string>
     <string name="defaultModelingPullSize">15</string>
     <string name="lab5">Лабораторная 5</string>
+    <string name="lab6">Лабораторная 6</string>
+    <string name="regMin">Минимальное время регистрации</string>
+    <string name="max">Максимум</string>
+    <string name="min">Минимум</string>
+    <string name="registrationTime">Время регистрации</string>
+    <string name="clientTime">Время прихода клиентов</string>
+    <string name="processTime">Время приёма</string>
+    <string name="printTime">Время проставления печати</string>
+    <string name="defaultMinTime">2</string>
+    <string name="defaultMaxTime">5</string>
+    <string name="printP">Вероятность поставить печать</string>
 
 </resources>

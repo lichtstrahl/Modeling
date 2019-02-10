@@ -29,6 +29,11 @@ public class StartActivity extends AppCompatActivity {
         InfoCenterActivity.start(this);
     }
 
+    @OnClick(R.id.buttonLab6)
+    public void clickStartLab6() {
+        HospitalActivity.start(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

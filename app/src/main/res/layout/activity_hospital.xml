@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight">
+
+    <View
+        android:id="@+id/horizontalCenter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/labelRegistrationTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registrationTime"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bigText"
+        android:layout_centerHorizontal="true"/>
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutRegMin"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelRegistrationTime"
+        android:layout_toStartOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputRegMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/min"
+            android:inputType="number"
+            android:text="@string/defaultMinTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutRegMax"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelRegistrationTime"
+        android:layout_toEndOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputRegMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/max"
+            android:inputType="number"
+            android:text="@string/defaultMaxTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/labelClientTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clientTime"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bigText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputLayoutRegMax"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutClientMin"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelClientTime"
+        android:layout_toStartOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputClientMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/min"
+            android:inputType="number"
+            android:text="@string/defaultMinTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutClientMax"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelClientTime"
+        android:layout_toEndOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputClientMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/max"
+            android:inputType="number"
+            android:text="@string/defaultMaxTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/labelProcessTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/processTime"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bigText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputLayoutClientMax"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutProcessMin"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelProcessTime"
+        android:layout_toStartOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputProcessMin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/min"
+            android:inputType="number"
+            android:text="@string/defaultMinTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutProcessMax"
+        android:layout_width="@dimen/widthInputTime"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/labelProcessTime"
+        android:layout_toEndOf="@id/horizontalCenter"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputProcessMax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/max"
+            android:inputType="number"
+            android:text="@string/defaultMaxTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutPrint"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/inputLayoutProcessMax"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputPrint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/printTime"
+            android:inputType="number"
+            android:text="@string/defaultMinTime"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutPrintP"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/inputLayoutPrint"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputPrintP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/printP"
+            android:inputType="number"
+            android:text="@string/defaultModelingBack"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/viewResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputLayoutPrintP"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bigText"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+</RelativeLayout>

@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.InfoCenterActivity"></activity>
+        <activity android:name=".ui.activity.HospitalActivity"></activity>
+        <activity android:name=".ui.activity.InfoCenterActivity" />
         <activity
             android:name=".ui.activity.QueueActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.GraphActivity" />
         <activity android:name=".ui.activity.StartActivity">
             <intent-filter>
@@ -27,7 +28,7 @@
         </activity>
         <activity
             android:name=".ui.activity.RandomActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
