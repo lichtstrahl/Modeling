@@ -16,6 +16,7 @@
 
     <dimen name="widthInput">80dp</dimen>
     <dimen name="widthInputX">170dp</dimen>
+    <dimen name="widthInputTime">90dp</dimen>
 
     <dimen name="viewSize">35dp</dimen>
 
