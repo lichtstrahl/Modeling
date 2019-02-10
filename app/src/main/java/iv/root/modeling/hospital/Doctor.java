@@ -3,6 +3,7 @@ package iv.root.modeling.hospital;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayDeque;
+import java.util.Random;
 
 import iv.root.modeling.center.TimeRandom;
 
@@ -13,13 +14,15 @@ public class Doctor implements Unit<Client> {
     private int endReceive;             // Окончание очередного приёма
     private Client curClient;
     private DoctorType type;
+    private int printP;
 
-    public Doctor(DoctorType type, int docMin, int docMax) {
+    public Doctor(DoctorType type, int docMin, int docMax, int printP) {
         timeRandom = new TimeRandom(docMin, docMax);
         queue = new ArrayDeque<>();
         active = false;
         endReceive = 0;
         this.type = type;
+        this.printP = printP;
     }
 
     public void putClient(Client client) {
@@ -35,6 +38,9 @@ public class Doctor implements Unit<Client> {
 
     private Client finishReceive() {
         active = false;
+        if (new Random(System.currentTimeMillis()).nextInt(100) < printP) {
+            curClient.setNeedPrint(true);
+        }
         return curClient;
     }
 

@@ -8,11 +8,13 @@ public class Operator implements Unit<Client> {
     private int timeEndReceive;     // Время окончания регистрации пациента
     private boolean active;
     private Client curClient;
+    private int printTime;
 
-    public Operator(int t0, int t1) {
+    public Operator(int t0, int t1, int pt) {
         timeRandom = new TimeRandom(t0, t1);
         active = false;
         timeEndReceive = 0;
+        printTime = pt;
     }
 
     public void startReceive(Client client) {
@@ -20,6 +22,14 @@ public class Operator implements Unit<Client> {
         active = true;
         curClient = client;
         timeEndReceive = timeRandom.nextValue();
+    }
+
+    public void startPrint(Client client) {
+        if (isActive()) throw new IllegalStateException("Оператор уже занят");
+        active = true;
+        curClient = client;
+        curClient.setNeedPrint(true);
+        timeEndReceive = printTime;
     }
 
 

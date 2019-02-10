@@ -80,5 +80,6 @@
     <string name="printTime">Время проставления печати</string>
     <string name="defaultMinTime">2</string>
     <string name="defaultMaxTime">5</string>
+    <string name="printP">Вероятность поставить печать</string>
 
 </resources>

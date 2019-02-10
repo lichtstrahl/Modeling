@@ -1,7 +1,6 @@
 package iv.root.modeling.hospital;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 import java.util.Locale;
@@ -9,20 +8,20 @@ import java.util.Locale;
 import iv.root.modeling.app.App;
 
 public class Model {
-    private static final int time = 20;//720;    // 740 - минут, рабочий день
+    private static final int time = 720;    // 740 - минут, рабочий день
     private static final int dt = 1;        // 1 Минута - шаг по времени
     private ClientGenerator clientGenerator;
     private RegisterOffice office;
     private Doctor[] doctors;
 
-    public Model(int clientMin, int clientMax, int regMin, int regMax, int docMin, int docMax) {
+    public Model(int clientMin, int clientMax, int regMin, int regMax, int docMin, int docMax, int printTime, int printP) {
         clientGenerator = new ClientGenerator(clientMin, clientMax);
-        office = new RegisterOffice(regMin, regMax);
+        office = new RegisterOffice(regMin, regMax, printTime);
         doctors = new Doctor[] {
-                new Doctor(DoctorType.DENTIST, docMin, docMax),
-                new Doctor(DoctorType.OCULIST, docMin, docMax),
-                new Doctor(DoctorType.SURGEON, docMin, docMax),
-                new Doctor(DoctorType.THERAPIST, docMin, docMax)
+                new Doctor(DoctorType.DENTIST, docMin, docMax, printP),
+                new Doctor(DoctorType.OCULIST, docMin, docMax, printP),
+                new Doctor(DoctorType.SURGEON, docMin, docMax, printP),
+                new Doctor(DoctorType.THERAPIST, docMin, docMax, printP)
         };
     }
 
@@ -42,8 +41,12 @@ public class Model {
             // Распределение зарегестрированных клиентов по врачам
             if (!clients.isEmpty()) {
                 for (Client c : clients) {
-                    Doctor doc = selectBestDoctor(c.getDoctor());
-                    doc.putClient(c);
+                    if (c.isNeedPrint()) {
+                        App.logI(String.format(Locale.ENGLISH, "Клиент %d проставил печать и идёт домой", c.getId()));
+                    } else {
+                        Doctor doc = selectBestDoctor(c.getDoctor());
+                        doc.putClient(c);
+                    }
                 }
             }
 
@@ -51,7 +54,12 @@ public class Model {
             for (Doctor d : doctors) {
                 Client client = d.step(dt);
                 if (client != null) {
-                    App.logI(String.format(Locale.ENGLISH, "Клиент %d прошёл врача", client.getId()));
+                    if (client.isNeedPrint()) {
+                        office.putPrintClient(client);
+                        App.logI(String.format(Locale.ENGLISH, "Клиент %d ушел за печатью", client.getId()));
+                    } else {
+                        App.logI(String.format(Locale.ENGLISH, "Клиент %d прошёл врача", client.getId()));
+                    }
                 }
             }
 

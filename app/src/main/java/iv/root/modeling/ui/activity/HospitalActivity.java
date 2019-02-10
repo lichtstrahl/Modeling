@@ -26,6 +26,10 @@ public class HospitalActivity extends AppCompatActivity {
     EditText inputProcessMin;
     @BindView(R.id.inputProcessMax)
     EditText inputProcessMax;
+    @BindView(R.id.inputPrintP)
+    EditText inputPrintP;
+    @BindView(R.id.inputPrint)
+    EditText inputPrintTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,9 @@ public class HospitalActivity extends AppCompatActivity {
                         Integer.valueOf(inputRegMin.getText().toString()),
                         Integer.valueOf(inputRegMax.getText().toString()),
                         Integer.valueOf(inputProcessMin.getText().toString()),
-                        Integer.valueOf(inputProcessMax.getText().toString())
+                        Integer.valueOf(inputProcessMax.getText().toString()),
+                        Integer.valueOf(inputPrintTime.getText().toString()),
+                        Integer.valueOf(inputPrintP.getText().toString())
                 );
                 hospital.modeling();
                 return true;

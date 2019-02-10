@@ -9,21 +9,24 @@ import io.reactivex.annotations.Nullable;
 public class RegisterOffice implements Unit<List<Client>> {
     private ArrayDeque<Client> queue;       // Очередь клиентов
     private ArrayDeque<Client> vipQueue;    // Очередь для "внеочереди"
-    private int nextReg;                    // Время окончания регистрации
     private Operator[] operators;
 
-    public RegisterOffice(int regMin, int regMax) {
+    public RegisterOffice(int regMin, int regMax, int printTime) {
         queue = new ArrayDeque<>();
         vipQueue = new ArrayDeque<>();
         operators = new Operator[] {
-          new Operator(regMin, regMax),
-          new Operator(regMin, regMax),
-          new Operator(regMin, regMax)
+          new Operator(regMin, regMax, printTime),
+          new Operator(regMin, regMax, printTime),
+          new Operator(regMin, regMax, printTime)
         };
     }
 
     public void putClient(Client client) {
         queue.addLast(client);
+    }
+
+    public void putPrintClient(Client client) {
+        vipQueue.addLast(client);
     }
 
     /**
@@ -44,7 +47,7 @@ public class RegisterOffice implements Unit<List<Client>> {
         // Если очереди не пусты и есть свободные операторы
         for (Operator o = freeOperator(); o != null && (!queue.isEmpty() || !vipQueue.isEmpty()); o = freeOperator()) {
             if (!vipQueue.isEmpty()){
-                o.startReceive(vipQueue.removeFirst());
+                o.startPrint(vipQueue.removeFirst());
             } else if (!queue.isEmpty()) {
                 o.startReceive(queue.removeFirst());
             }

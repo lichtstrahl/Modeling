@@ -170,4 +170,22 @@
             android:text="@string/defaultMinTime"/>
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutPrintP"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/stdMargin"
+        android:layout_below="@id/inputLayoutPrint"
+        android:layout_centerHorizontal="true"
+        android:textColorHint="@android:color/white">
+        <EditText
+            android:id="@+id/inputPrintP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/stdMargin"
+            android:hint="@string/printP"
+            android:inputType="number"
+            android:text="@string/defaultModelingBack"/>
+    </android.support.design.widget.TextInputLayout>
+
 </RelativeLayout>
