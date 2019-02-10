@@ -16,7 +16,6 @@ public class RegisterOffice implements Unit<List<Client>> {
         vipQueue = new ArrayDeque<>();
         operators = new Operator[] {
           new Operator(regMin, regMax, printTime),
-          new Operator(regMin, regMax, printTime),
           new Operator(regMin, regMax, printTime)
         };
     }
@@ -45,7 +44,7 @@ public class RegisterOffice implements Unit<List<Client>> {
         }
 
         // Если очереди не пусты и есть свободные операторы
-        for (Operator o = freeOperator(); o != null && (!queue.isEmpty() || !vipQueue.isEmpty()); o = freeOperator()) {
+        for (Operator o = freeOperator(); o != null && (!vipQueue.isEmpty() || !queue.isEmpty()); o = freeOperator()) {
             if (!vipQueue.isEmpty()){
                 o.startPrint(vipQueue.removeFirst());
             } else if (!queue.isEmpty()) {
@@ -68,5 +67,13 @@ public class RegisterOffice implements Unit<List<Client>> {
             }
         }
         return null;
+    }
+
+    public int getQueueSize() {
+        return queue.size();
+    }
+
+    public int getVipQueueSize() {
+        return vipQueue.size();
     }
 }

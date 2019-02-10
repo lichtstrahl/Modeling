@@ -188,4 +188,15 @@
             android:text="@string/defaultModelingBack"/>
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/viewResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/inputLayoutPrintP"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/bigText"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
 </RelativeLayout>

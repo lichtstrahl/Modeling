@@ -8,11 +8,12 @@ import java.util.Locale;
 import iv.root.modeling.app.App;
 
 public class Model {
-    private static final int time = 720;    // 740 - минут, рабочий день
+    private static final int time = 740;    // 740 - минут, рабочий день
     private static final int dt = 1;        // 1 Минута - шаг по времени
     private ClientGenerator clientGenerator;
     private RegisterOffice office;
     private Doctor[] doctors;
+    private int missClient;
 
     public Model(int clientMin, int clientMax, int regMin, int regMax, int docMin, int docMax, int printTime, int printP) {
         clientGenerator = new ClientGenerator(clientMin, clientMax);
@@ -23,6 +24,7 @@ public class Model {
                 new Doctor(DoctorType.SURGEON, docMin, docMax, printP),
                 new Doctor(DoctorType.THERAPIST, docMin, docMax, printP)
         };
+        missClient = 0;
     }
 
     public void modeling() {
@@ -32,8 +34,12 @@ public class Model {
             // Поступление новых клиентов в регистратуру
             Client newClient = clientGenerator.step(dt);
             if (newClient != null) {
-                App.logI(String.format(Locale.ENGLISH, "Клиент %d встал в очередь", newClient.getId()));
-                office.putClient(newClient);
+                if (office.getQueueSize() <= newClient.getMaxQueue()) {
+                    office.putClient(newClient);
+                    App.logI(String.format(Locale.ENGLISH, "Клиент %d встал в очередь", newClient.getId()));
+                } else {
+                    missClient++;
+                }
             }
 
             // Работа регистратуры.
@@ -45,6 +51,7 @@ public class Model {
                         App.logI(String.format(Locale.ENGLISH, "Клиент %d проставил печать и идёт домой", c.getId()));
                     } else {
                         Doctor doc = selectBestDoctor(c.getDoctor());
+                        App.logI(String.format(Locale.ENGLISH, "Клиент %d ушел к врачу", c.getId()));
                         doc.putClient(c);
                     }
                 }
@@ -64,6 +71,7 @@ public class Model {
             }
 
             currentTime += dt;
+            App.logI(String.format(Locale.ENGLISH,"\t\tОчереди (%d, %d)", office.getQueueSize(), office.getVipQueueSize()));
         }
     }
 
@@ -72,19 +80,22 @@ public class Model {
      * @param type  - специализация врача
      * @return - найденный врач с наименьшей очередью
      */
-    @NonNull
     private Doctor selectBestDoctor(DoctorType type) {
         Doctor result = null;
         for (Doctor doctor : doctors) {
             if (doctor.getType() == type) {
-                if (result == null) {
-                    result = doctor;
-                } else if (result.getClients() > doctor.getClients()) {
-                    result = doctor;
-                }
+                result = (result == null || result.getClients() > doctor.getClients()) ? doctor : result;
             }
         }
 
         return result;
+    }
+
+    public int getMissClient() {
+        return missClient;
+    }
+
+    public int getAllClient() {
+        return clientGenerator.getCountClients();
     }
 }
